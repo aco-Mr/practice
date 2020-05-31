@@ -1,5 +1,6 @@
 package com.aco.practice.demo1.config;
 
+import com.aco.practice.demo1.util.ApiHttpCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -102,8 +103,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
      */
     private List<ResponseMessage> responseBuilder() {
         List<ResponseMessage> responseMessageList = new ArrayList<>();
-        responseMessageList.add(new ResponseMessageBuilder().code(200).message("响应成功").build());
-        responseMessageList.add(new ResponseMessageBuilder().code(500).message("服务器内部错误").build());
+        responseMessageList.add(new ResponseMessageBuilder().code(ApiHttpCode.SUCCESS.getCode()).message(ApiHttpCode.SUCCESS.getMsg()).build());
+        responseMessageList.add(new ResponseMessageBuilder().code(ApiHttpCode.ERROR.getCode()).message(ApiHttpCode.ERROR.getMsg()).build());
         return responseMessageList;
     }
 
