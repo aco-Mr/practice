@@ -4,6 +4,7 @@ import com.aco.practice.demo1.util.ApiResponse;
 import com.aco.practice.demo1.util.RedisKeyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/demo")
 @Api(value = "测试接口")
+@Slf4j
 public class DemoController {
 
     @Autowired
@@ -33,6 +35,7 @@ public class DemoController {
     public ApiResponse setAndGetRedis(String str){
         String redisKey = RedisKeyUtil.getRedisKey(str);
         redisTemplate.opsForValue().set(redisKey,str);
+        log.info("测试日志：{}","测试日志");
         return ApiResponse.ok(redisTemplate.opsForValue().get(redisKey));
     }
 }
