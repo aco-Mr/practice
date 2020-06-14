@@ -8,4 +8,8 @@ public class RedisKeyUtil {
     public static String getRedisKey(String str){
         return "aco:" + str;
     }
+
+    public static String getRequestKey(String str){
+        return "aco:request:" + str;
+    }
 }
