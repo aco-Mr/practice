@@ -5,7 +5,7 @@
     <Properties>
         <Property name="LOG_PATH">./logs</Property>
         <!--定义日志输出目录-->
-        <Property name="LOG_HOME">/data/apps</Property>
+        <Property name="LOG_HOME">/data/apps/practice</Property>
     </Properties>
     <Appenders>
         <!-- Console控制台输出的日志格式 -->
@@ -15,7 +15,7 @@
         </Console>
         <!-- RollingFile -->
         <RollingRandomAccessFile name="RollingFile"
-                                 fileName="./practice.log"
+                                 fileName="${LOG_HOME}/practice.log"
                                  filePattern="${LOG_PATH}/mypratice.log.%d{yyyy-MM-dd-HH}">
             <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}.%M@%L - %msg%n"/>
             <Policies>
