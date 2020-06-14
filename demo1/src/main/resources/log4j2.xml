@@ -3,17 +3,19 @@
 <!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <Configuration status="off">
     <Properties>
-        <Property name="LOG_PATH">.</Property>
+        <Property name="LOG_PATH">./logs</Property>
+        <!--定义日志输出目录-->
+        <Property name="LOG_HOME">/data/apps</Property>
     </Properties>
     <Appenders>
-        <!-- Console -->
+        <!-- Console控制台输出的日志格式 -->
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36}.%M@%L - %msg%n"/>
             <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %C{5} (%F:%L) - %msg%n"/>-->
         </Console>
         <!-- RollingFile -->
         <RollingRandomAccessFile name="RollingFile"
-                                 fileName="./aifasion.log"
+                                 fileName="./practice.log"
                                  filePattern="${LOG_PATH}/mypratice.log.%d{yyyy-MM-dd-HH}">
             <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}.%M@%L - %msg%n"/>
             <Policies>
@@ -22,6 +24,27 @@
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
     </Appenders>
+    <!-- 设置日志（访问日志，系统日志）输出位置以及格式 -->
+    <appender name="INTERFACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/practice.log</FileNamePattern>
+            <!-- 根据日志文件按天回滚，保存时间为30天，30天之前的都将被清理掉 -->
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%date] [%thread] [%level] %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只打印INFO日志 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
     <Loggers>
         <!-- Spring Loggers -->
