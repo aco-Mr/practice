@@ -3,8 +3,7 @@ package com.aco.practice.demo1.handle;
 import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.response.ErrorInfo;
 import com.aco.practice.demo1.util.ApiHttpCode;
-import com.aco.practice.demo1.util.ApiResponse;
-import org.springframework.http.HttpStatus;
+import com.aco.practice.demo1.util.ApiResponseResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,8 +23,8 @@ public class RestExceptionHandle {
      * @return
      */
     @ExceptionHandler({CustomException.class})
-    public ApiResponse<CustomException> customExceptionHandle(HttpServletRequest request,CustomException customException){
-        return new ApiResponse<CustomException>(ApiHttpCode.ERROR,new CustomException(ApiHttpCode.ERROR.getCode(),customException.getMessage()));
+    public ApiResponseResult<CustomException> customExceptionHandle(HttpServletRequest request, CustomException customException){
+        return new ApiResponseResult<CustomException>(ApiHttpCode.ERROR,new CustomException(ApiHttpCode.ERROR.getCode(),customException.getMessage()));
     }
 
     /**
@@ -36,10 +35,10 @@ public class RestExceptionHandle {
      * @return
      */
     @ExceptionHandler({Exception.class})
-    public ApiResponse<ErrorInfo> exceptionHandle(HttpServletRequest request,Exception exception){
+    public ApiResponseResult<ErrorInfo> exceptionHandle(HttpServletRequest request, Exception exception){
         ErrorInfo body = new ErrorInfo();
         body.setCode(ApiHttpCode.ERROR.getCode());
         body.setMsg(exception.getMessage());
-        return new ApiResponse<ErrorInfo>(ApiHttpCode.ERROR,body);
+        return new ApiResponseResult<ErrorInfo>(ApiHttpCode.ERROR,body);
     }
 }
