@@ -2,6 +2,7 @@ package com.aco.practice.demo1.handle;
 
 import com.aco.practice.demo1.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author XHaoJian
@@ -16,37 +18,42 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 public class RequestInterceptor extends HandlerInterceptorAdapter {
-    private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /** 之前 **/
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String pre = RedisKeyUtil.getRequestKey("pre");
-        redisTemplate.opsForValue().set(pre,"URL拦截之前");
+        String requestURI = request.getRequestURI();
+        String pre = RedisKeyUtil.getRequestKey(requestURI);
+        log.info("请求路径：{}",requestURI);
+        redisTemplate.opsForValue().set(pre,requestURI,30, TimeUnit.SECONDS);
         log.info("" + redisTemplate.opsForValue().get(pre));
-        return preHandle(request,response,handler);
+        // 不放行
+        return true;
     }
 
     /** 之中 **/
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String pre = RedisKeyUtil.getRequestKey("post");
-        redisTemplate.opsForValue().set(pre,"URL拦截之中");
-        log.info("" + redisTemplate.opsForValue().get(pre));
-        super.postHandle(request,response,handler,modelAndView);
+//        String pre = RedisKeyUtil.getRequestKey("post");
+//        redisTemplate.opsForValue().set(pre,"URL拦截之中",30, TimeUnit.SECONDS);
+//        log.info("" + redisTemplate.opsForValue().get(pre));
+//        super.postHandle(request,response,handler,modelAndView);
     }
 
     /** 之后 **/
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        String pre = RedisKeyUtil.getRequestKey("after");
-        redisTemplate.opsForValue().set(pre,"URL拦截之后");
-        log.info("" + redisTemplate.opsForValue().get(pre));
-        super.afterCompletion(request,response,handler,ex);
+//        String pre = RedisKeyUtil.getRequestKey("after");
+//        redisTemplate.opsForValue().set(pre,"URL拦截之后",30, TimeUnit.SECONDS);
+//        log.info("" + redisTemplate.opsForValue().get(pre));
+//        super.afterCompletion(request,response,handler,ex);
     }
 
     @Override
     public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        super.afterConcurrentHandlingStarted(request, response, handler);
+//        super.afterConcurrentHandlingStarted(request, response, handler);
     }
 }
