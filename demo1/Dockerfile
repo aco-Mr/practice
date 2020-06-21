@@ -1,4 +1,5 @@
 FROM java:8
-ADD demo1-0.0.1-SNAPSHOT.jar /data/apps/demo1.jar
+ADD acoApps.jar /data/apps/acoApps.jar
+WORKDIR /data/apps/practice/
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/data/apps/demo1.jar", ""]
+ENTRYPOINT ["java", "-Dloader.path=/data/apps/practice/lib", "-jar", "/data/apps/acoApps.jar", ""]
