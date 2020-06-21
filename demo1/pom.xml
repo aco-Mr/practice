@@ -52,7 +52,18 @@
             <artifactId>guava</artifactId>
             <version>29.0-jre</version>
         </dependency>
-
+        <!-- SSH通讯包 -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+        <!-- commons-net 的 FTP 功能 -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
     </dependencies>
 
     <build>
