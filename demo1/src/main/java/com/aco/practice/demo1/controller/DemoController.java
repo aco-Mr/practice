@@ -7,6 +7,7 @@ import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
 import com.aco.practice.demo1.domain.response.vo.EasypoiVo;
 import com.aco.practice.demo1.domain.response.vo.ExportTestVo;
 import com.aco.practice.demo1.util.ApiResponseResult;
+import com.aco.practice.demo1.util.ExcelStyleUtil;
 import com.aco.practice.demo1.util.RedisKeyUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -82,17 +83,20 @@ public class DemoController {
         List<ExcelExportEntity> colList = new ArrayList<>();
         ExcelExportEntity exportGroup;
         exportGroup = new ExcelExportEntity("日期姓名","tittle");
+        exportGroup.setHeight(20);
+        exportGroup.setWidth(30);
+        colList.add(exportGroup);
         for (int i = 0; i < easypoiVos.size(); i++){
             //创建表头
             EasypoiVo easypoiVo = easypoiVos.get(i);
             exportGroup = new ExcelExportEntity(easypoiVo.getColumn(),easypoiVo.getKey());
+            exportGroup.setHeight(20);
+            exportGroup.setWidth(30);
             colList.add(exportGroup);
         }
         //组装数据
         List<Map<String,Object>> list = new ArrayList<>();
         for (ExportTestVo exportTestVo : dataList) {
-            Map<String,Object> tittles = new HashMap<>();
-            tittles.put("tittle","测试列头." + exportTestVo.getName());
             Map<String,Object> map = new HashMap<>();
             //获取key集合
             Set<Object> collect = colList.stream().map(ExcelExportEntity::getKey).collect(Collectors.toSet());
@@ -101,18 +105,21 @@ public class DemoController {
                 for (String str : exportTestVo.getList()) {
                     if (str.equals(key)){
                         map.put(key,exportTestVo.getName() + "column" + str);
+                        map.put("tittle","测试列头." + str);
                         list.add(map);
                         break;
                     }
                 }
             }
-            list.add(tittles);
         }
 
         ServletOutputStream os = null;
         try {
             String sheetName = "sheetName";
-            Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("测试头",sheetName),colList,list);
+            ExportParams exportParams = new ExportParams("测试头", sheetName);
+            //设置样式
+            exportParams.setStyle(ExcelStyleUtil.class);
+            Workbook workbook = ExcelExportUtil.exportExcel(exportParams,colList,list);
             // 添加下划线
             HSSFSheet sheet = (HSSFSheet) workbook.getSheet(sheetName);
             HSSFRow row = sheet.getRow(1);
@@ -124,6 +131,7 @@ public class DemoController {
             HSSFSimpleShape shape1 = patriarch.createSimpleShape(a);
             shape1.setShapeType(HSSFSimpleShape.OBJECT_TYPE_LINE);
             shape1.setLineStyle(HSSFSimpleShape.LINESTYLE_SOLID) ;
+
             //导出
             os = response.getOutputStream();
             response.setHeader("Content-Disposition", "attachment;filename="+new String("test1".getBytes(), StandardCharsets.ISO_8859_1)+".xlsx");
