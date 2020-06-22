@@ -10,42 +10,20 @@
     <Appenders>
         <!-- Console控制台输出的日志格式 -->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36}.%M@%L - %msg%n"/>
-            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %C{5} (%F:%L) - %msg%n"/>-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] %logger{36}.%M@%L - %msg%n"/>
+<!--            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %C{5} (%F:%L) - %msg%n"/>-->
         </Console>
         <!-- RollingFile -->
         <RollingRandomAccessFile name="RollingFile"
                                  fileName="${LOG_HOME}/practice.log"
                                  filePattern="${LOG_PATH}/mypratice.log.%d{yyyy-MM-dd-HH}">
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}.%M@%L - %msg%n"/>
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{36}.%M@%L - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
     </Appenders>
-    <!-- 设置日志（访问日志，系统日志）输出位置以及格式 -->
-    <appender name="INTERFACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/practice.log</FileNamePattern>
-            <!-- 根据日志文件按天回滚，保存时间为30天，30天之前的都将被清理掉 -->
-            <maxHistory>7</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>20MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>[%date] [%thread] [%level] %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 只打印INFO日志 -->
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
     <Loggers>
         <!-- Spring Loggers -->
         <Logger  name="org.springframework" level="info"/>
@@ -62,4 +40,7 @@
             <AppenderRef ref="RollingFile"/>
         </Root >
     </Loggers>
+
 </Configuration>
+
+<!--        https://blog.csdn.net/u013278314/article/details/100012109?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase-->

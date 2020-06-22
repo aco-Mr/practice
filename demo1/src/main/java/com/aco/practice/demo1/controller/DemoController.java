@@ -59,7 +59,7 @@ public class DemoController {
 
     @ApiOperation(value = "测试导出Excel接口")
     @GetMapping(value = "export")
-    public void exportExcel(HttpServletRequest request, HttpServletResponse response){
+    public void exportExcel(String tittle, HttpServletResponse response){
         //初始化数据
         //列头
         List<String> columns = Arrays.asList("1", "2", "3");
@@ -116,7 +116,7 @@ public class DemoController {
         ServletOutputStream os = null;
         try {
             String sheetName = "sheetName";
-            ExportParams exportParams = new ExportParams("测试头", sheetName);
+            ExportParams exportParams = new ExportParams(tittle, sheetName);
             //设置样式
             exportParams.setStyle(ExcelStyleUtil.class);
             Workbook workbook = ExcelExportUtil.exportExcel(exportParams,colList,list);
@@ -134,7 +134,7 @@ public class DemoController {
 
             //导出
             os = response.getOutputStream();
-            response.setHeader("Content-Disposition", "attachment;filename="+new String("test1".getBytes(), StandardCharsets.ISO_8859_1)+".xlsx");
+            response.setHeader("Content-Disposition", "attachment;filename="+new String("test1".getBytes(), StandardCharsets.ISO_8859_1)+".xls");
             response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             response.setHeader("Pragma", "no-cache");
             response.setHeader("Cache-Control", "no-cache");
