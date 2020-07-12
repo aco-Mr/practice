@@ -1,7 +1,9 @@
 package com.aco.practice.demo1.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
  */
 public class BaseEntity {
 
-    @TableField(value = "id",fill = FieldFill.INSERT)
+    @TableId(value = "id",type = IdType.INPUT)
     private String id;
 
     /**
