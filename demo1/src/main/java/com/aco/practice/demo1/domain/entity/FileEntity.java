@@ -29,6 +29,11 @@ public class FileEntity extends BaseEntity {
     private String fileName;
 
     /**
+     * 文件后缀
+     */
+    private String fileSuffix;
+
+    /**
     * 文件存放地址
     */
     private String fileUrl;
