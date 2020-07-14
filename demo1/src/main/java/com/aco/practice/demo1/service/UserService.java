@@ -14,4 +14,11 @@ public interface UserService {
      * @return
      */
     UserEntity saveUser(UserDto userDto);
+
+    /**
+     * 登录
+     * @param userDto
+     * @return
+     */
+    String login(UserDto userDto);
 }

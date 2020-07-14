@@ -12,4 +12,13 @@ public class RedisKeyUtil {
     public static String getRequestKey(String str){
         return "aco:request:" + str;
     }
+
+    /**
+     * 生成用户Token
+     * @param userId
+     * @return
+     */
+    public static String getUserTokenKey(String userId){
+        return userId + ":" + IdUtil.getUUID();
+    }
 }
