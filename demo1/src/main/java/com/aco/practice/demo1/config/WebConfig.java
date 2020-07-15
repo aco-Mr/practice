@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private final String[] URL_PATH = {"/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"};
+    private final String[] URL_PATH = {"/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/user/save","/login/form"};
 
     //新建一个拦截类注入到spring容器
     @Bean

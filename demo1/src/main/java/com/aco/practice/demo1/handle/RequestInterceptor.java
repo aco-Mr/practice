@@ -1,7 +1,10 @@
 package com.aco.practice.demo1.handle;
 
+import com.aco.practice.demo1.domain.entity.UserEntity;
+import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /** 之前 **/
     @Override
@@ -30,6 +33,14 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         log.info("请求路径：{}",requestURI);
         redisTemplate.opsForValue().set(pre,requestURI,30, TimeUnit.SECONDS);
         log.info("" + redisTemplate.opsForValue().get(pre));
+        String token = request.getHeader("token");
+        if (StringUtils.isBlank(token)){
+            throw new CustomException("请先登录");
+        }
+        Object user = redisTemplate.opsForValue().get(token);
+        if (user == null){
+            throw new CustomException("请先登录");
+        }
         // 不放行
         return true;
     }

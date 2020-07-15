@@ -23,8 +23,11 @@ public class RestExceptionHandle {
      * @return
      */
     @ExceptionHandler({CustomException.class})
-    public ApiResponseResult<CustomException> customExceptionHandle(HttpServletRequest request, CustomException customException){
-        return new ApiResponseResult<CustomException>(ApiHttpCode.ERROR,new CustomException(ApiHttpCode.ERROR.getCode(),customException.getMessage()));
+    public ApiResponseResult<ErrorInfo> customExceptionHandle(HttpServletRequest request, CustomException customException){
+        ErrorInfo body = new ErrorInfo();
+        body.setCode(ApiHttpCode.ERROR.getCode());
+        body.setMsg(customException.getMessage());
+        return new ApiResponseResult<ErrorInfo>(ApiHttpCode.ERROR,body);
     }
 
     /**
