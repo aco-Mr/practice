@@ -4,17 +4,17 @@ package com.aco.practice.demo1.domain.emnu;
  * @author XHaoJian
  * @data 2020/7/14 21:52
  */
-public enum UserStateEnum {
+public enum StateEnum {
     NORMAL("正常",0),
     DISABLE("禁用",1);
 
     private String msg;
     private int code;
 
-    UserStateEnum() {
+    StateEnum() {
     }
 
-    UserStateEnum(String msg, int code) {
+    StateEnum(String msg, int code) {
         this.msg = msg;
         this.code = code;
     }

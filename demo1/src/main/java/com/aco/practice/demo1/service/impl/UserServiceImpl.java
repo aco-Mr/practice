@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.service.impl;
 
-import com.aco.practice.demo1.domain.emnu.UserStateEnum;
+import com.aco.practice.demo1.domain.emnu.StateEnum;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.request.dto.UserDto;
 import com.aco.practice.demo1.mapper.UserMapper;
@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 
     @Override
     public String login(UserDto userDto) {
-        UserEntity userEntity = this.baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getName, userDto.getName()).eq(UserEntity::getPassword, userDto.getPassword()).eq(UserEntity::getState, UserStateEnum.NORMAL.getCode()));
+        UserEntity userEntity = this.baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getName, userDto.getName()).eq(UserEntity::getPassword, userDto.getPassword()).eq(UserEntity::getState, StateEnum.NORMAL.getCode()));
         if (userEntity != null){
             String userToken = RedisKeyUtil.getUserTokenKey(userEntity.getId());
             redisTemplate.opsForValue().set(userToken,userEntity,30, TimeUnit.MINUTES);

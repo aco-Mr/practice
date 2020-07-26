@@ -34,6 +34,11 @@ public class ScheduledConfigEntity extends BaseEntity {
     private String methodName;
 
     /**
+     * cron表达式
+     */
+    private String cron;
+
+    /**
     * 类名称
     */
     private String clssPath;
