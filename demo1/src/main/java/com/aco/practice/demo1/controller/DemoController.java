@@ -4,9 +4,11 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
+import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.response.vo.EasypoiVo;
 import com.aco.practice.demo1.domain.response.vo.ExportTestVo;
 import com.aco.practice.demo1.util.ApiResponseResult;
+import com.aco.practice.demo1.util.ContextUserUtil;
 import com.aco.practice.demo1.util.ExcelStyleUtil;
 import com.aco.practice.demo1.util.RedisKeyUtil;
 import io.swagger.annotations.Api;
@@ -45,7 +47,8 @@ public class DemoController {
     @ApiOperation(value = "demo 测试接口", notes = "demo 测试接口")
     @GetMapping(value = "demo")
     public void test(){
-
+        UserEntity userInfo = ContextUserUtil.getUserInfo();
+        log.info("用户信息：{}",userInfo);
     }
 
     @ApiOperation(value = "测试redis接口", notes = "测试redis接口")

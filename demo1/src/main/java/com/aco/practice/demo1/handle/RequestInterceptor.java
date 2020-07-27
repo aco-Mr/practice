@@ -11,8 +11,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,6 +43,8 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         if (user == null){
             throw new CustomException("请先登录");
         }
+        ServletContext servletContext = request.getServletContext();
+        servletContext.setAttribute("user",user);
         // 不放行
         return true;
     }
@@ -61,6 +65,9 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 //        redisTemplate.opsForValue().set(pre,"URL拦截之后",30, TimeUnit.SECONDS);
 //        log.info("" + redisTemplate.opsForValue().get(pre));
 //        super.afterCompletion(request,response,handler,ex);
+        ServletContext servletContext = request.getServletContext();
+        servletContext.removeAttribute("user");
+        log.info("删除用户信息");
     }
 
     @Override
