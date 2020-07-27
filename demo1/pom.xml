@@ -64,18 +64,25 @@
             <artifactId>guava</artifactId>
             <version>29.0-jre</version>
         </dependency>
-        <!-- SSH通讯包 -->
+
         <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.54</version>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
         </dependency>
-        <!-- commons-net 的 FTP 功能 -->
+
         <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>3.6</version>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
         <!-- alibaba fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

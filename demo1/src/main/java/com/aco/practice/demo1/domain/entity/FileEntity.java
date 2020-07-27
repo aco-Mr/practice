@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "t_user")
+@TableName(value = "t_file")
 public class FileEntity extends BaseEntity {
 
     /**
