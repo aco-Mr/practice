@@ -30,9 +30,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 // 指定拦截类
                 .addInterceptor(getRequestInterceptor())
-                .excludePathPatterns(URL_PATH)
+                .excludePathPatterns(URL_PATH);
                 // 指定拦截路径
-                .addPathPatterns("/**");
+//                .addPathPatterns("/**")
     }
 
     @Override

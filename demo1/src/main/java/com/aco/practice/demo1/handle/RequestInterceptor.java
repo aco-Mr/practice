@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -15,6 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,6 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class RequestInterceptor extends HandlerInterceptorAdapter {
+
+    private final String[] URL_PATH = {"/aco/error","/aco/csrf","/aco/","/aco"};
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -33,6 +37,11 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         String requestURI = request.getRequestURI();
         String pre = RedisKeyUtil.getRequestKey(requestURI);
         log.info("请求路径：{}",requestURI);
+        for (String url : URL_PATH) {
+            if (url.equals(requestURI)){
+                return true;
+            }
+        }
         redisTemplate.opsForValue().set(pre,requestURI,30, TimeUnit.SECONDS);
         log.info("" + redisTemplate.opsForValue().get(pre));
         String token = request.getHeader("token");
