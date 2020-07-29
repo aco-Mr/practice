@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.aco.practice.demo1.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,4 +49,9 @@ public class ScheduledConfigEntity extends BaseEntity {
     */
     private Integer state;
 
+    /**
+     * 版本号
+     */
+    @Version
+    private int version;
 }
