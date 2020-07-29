@@ -8,6 +8,7 @@ import com.aco.practice.demo1.handle.UserContextHolder;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
 import com.aco.practice.demo1.service.ScheduledConfigService;
 import com.aco.practice.demo1.task.ScheduledTask;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -78,7 +79,7 @@ public class ScheduledConfigServiceImpl extends ServiceImpl<ScheduledConfigMappe
             throw new CustomException(configEntity.getJobName() + "定时任务已存在");
         }
         //启动定时任务
-        log.info("启动定时任务");
+        log.info("启动定时任务,定时任务信息：{}", JSONObject.toJSONString(configEntity));
         CronTrigger cronTrigger = new CronTrigger(configEntity.getCron());
         ScheduledTask scheduledTask = new ScheduledTask(configEntity);
         ScheduledFuture<?> schedule = taskScheduler.schedule(scheduledTask, cronTrigger);

@@ -1,18 +1,18 @@
 package com.aco.practice.demo1.domain.entity;
 
-import java.util.Date;
-
 import com.aco.practice.demo1.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
 * @Author: HaoJianXu
 * @Date: 2020/7/25 15:18
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

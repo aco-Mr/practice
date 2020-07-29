@@ -2,9 +2,12 @@ package com.aco.practice.demo1.task;
 
 import com.aco.practice.demo1.domain.entity.ScheduledConfigEntity;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
+import com.aco.practice.demo1.util.SpringBeanUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 /**
  * @Author: HaoJianXu
@@ -15,11 +18,16 @@ public class ScheduledTask implements Runnable {
 
     private ScheduledConfigEntity scheduledConfigEntity;
 
-    @Autowired
     private ScheduledConfigMapper scheduledConfigMapper;
 
-    public ScheduledTask(ScheduledConfigEntity scheduledConfigEntity){
+    public ScheduledTask(ScheduledConfigEntity scheduledConfigEntity) {
         this.scheduledConfigEntity = scheduledConfigEntity;
+        this.scheduledConfigMapper = SpringBeanUtil.getBean(ScheduledConfigMapper.class);
+    }
+
+    public ScheduledTask(ScheduledConfigEntity scheduledConfigEntity, ScheduledConfigMapper scheduledConfigMapper){
+        this.scheduledConfigEntity = scheduledConfigEntity;
+        this.scheduledConfigMapper = scheduledConfigMapper;
     }
 
     @Override
