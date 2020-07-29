@@ -4,10 +4,10 @@ import com.aco.practice.demo1.domain.emnu.StateEnum;
 import com.aco.practice.demo1.domain.entity.ScheduledConfigEntity;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.exception.CustomException;
+import com.aco.practice.demo1.handle.UserContextHolder;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
 import com.aco.practice.demo1.service.ScheduledConfigService;
 import com.aco.practice.demo1.task.ScheduledTask;
-import com.aco.practice.demo1.util.ContextUserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -64,7 +64,7 @@ public class ScheduledConfigServiceImpl extends ServiceImpl<ScheduledConfigMappe
         configEntity.setClssPath(this.getClass().getName());
         configEntity.setCron(cron);
         configEntity.setState(0);
-        UserEntity userInfo = ContextUserUtil.getUserInfo();
+        UserEntity userInfo = (UserEntity) UserContextHolder.getInstance().getContext().get("user");
         configEntity.setUserId(userInfo.getId());
     }
 

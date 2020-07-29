@@ -10,8 +10,8 @@ import java.util.Optional;
  * @author XHaoJian
  * @data 2020/7/28 23:34
  */
-public class UserContextHolder {
-    private ThreadLocal<Map<String, String>> threadLocal;
+public class UserContextHolder<T> {
+    private ThreadLocal<Map<String, T>> threadLocal;
 
     private UserContextHolder() {
         this.threadLocal = new ThreadLocal<>();
@@ -38,7 +38,7 @@ public class UserContextHolder {
      *
      * @param map
      */
-    public void setContext(Map<String, String> map) {
+    public void setContext(Map<String, T> map) {
         threadLocal.set(map);
     }
 
@@ -47,7 +47,7 @@ public class UserContextHolder {
      *
      * @return
      */
-    public Map<String, String> getContext() {
+    public Map<String, T> getContext() {
         return threadLocal.get();
     }
 
@@ -56,7 +56,7 @@ public class UserContextHolder {
      *
      * @return
      */
-    public String getUseParam(String obj) {
+    public T getUseParam(String obj) {
         return Optional.ofNullable(threadLocal.get()).orElse(Maps.newHashMap()).get(obj);
     }
 

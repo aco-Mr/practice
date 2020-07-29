@@ -41,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
         UserEntity userEntity = this.baseMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getName, userDto.getName()).eq(UserEntity::getPassword, userDto.getPassword()).eq(UserEntity::getState, StateEnum.NORMAL.getCode()));
         if (userEntity != null){
             String userToken = RedisKeyUtil.getUserTokenKey(userEntity.getId());
-            redisTemplate.opsForValue().set(userToken,userEntity,30, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(userToken,JSONObject.toJSONString(userEntity),30, TimeUnit.MINUTES);
             log.info("登录成功");
             return userToken;
         }

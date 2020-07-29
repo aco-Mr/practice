@@ -3,6 +3,7 @@ package com.aco.practice.demo1.handle;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.util.RedisKeyUtil;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,12 +51,17 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         if (StringUtils.isBlank(token)){
             throw new CustomException("请先登录");
         }
-        Object user = redisTemplate.opsForValue().get(token);
-        if (user == null){
+        String user = String.valueOf(redisTemplate.opsForValue().get(token));
+        if (StringUtils.isBlank(user)){
             throw new CustomException("请先登录");
         }
-        ServletContext servletContext = request.getServletContext();
-        servletContext.setAttribute("user",user);
+        //获取实例
+        UserContextHolder<UserEntity> instance = UserContextHolder.getInstance();
+        // 保存用户信息到上下文
+        UserEntity userEntity = JSONObject.parseObject(user,UserEntity.class);
+        HashMap<String,UserEntity> map = new HashMap<>(32);
+        map.put("user",userEntity);
+        instance.setContext(map);
         // 不放行
         return true;
     }
@@ -74,8 +82,8 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 //        redisTemplate.opsForValue().set(pre,"URL拦截之后",30, TimeUnit.SECONDS);
 //        log.info("" + redisTemplate.opsForValue().get(pre));
 //        super.afterCompletion(request,response,handler,ex);
-        ServletContext servletContext = request.getServletContext();
-        servletContext.removeAttribute("user");
+        //清除用户信息
+        UserContextHolder.getInstance().clear();
         log.info("删除用户信息");
     }
 
