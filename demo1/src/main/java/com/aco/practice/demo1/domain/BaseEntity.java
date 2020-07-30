@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
  */
 public class BaseEntity {
 
-    @TableId(value = "id",type = IdType.INPUT)
+    @TableId(type = IdType.INPUT)
     private String id;
 
     /**
      * 创建时间
      */
-    @TableField(value = "create_time",fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     public String getId() {
