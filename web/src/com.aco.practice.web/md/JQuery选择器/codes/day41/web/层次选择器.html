@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>层次选择器</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("h2").click(function () {
+                // $("#box span").css("background-color","yellow");//后代选择器(子元素和孙辈元素)，所有id为box下的所有span元素
+                // $("#box>span").css("background-color","yellow");//子代选择器(直接子元素不要孙辈元素)，id为box下的直接span元素，不要孙辈元素
+                // $("h2+dl").css("background-color","yellow");//相邻选择器，紧邻h2之后的dl元素
+                $("h2~dl").css("background-color","yellow");//同辈选择器，紧邻h2之后的所有dl元素
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="box">
+        <h2>层次选择器</h2>
+        <dl>
+            <dt>Java</dt>
+            <dd>
+                <a href="#">JavaSE<span>层次选择器1</span></a>&nbsp;&nbsp;
+                <a href="#">JavaEE</a>&nbsp;&nbsp;
+                <a href="#">JavaME</a>&nbsp;&nbsp;
+            </dd>
+        </dl>
+        <dl>
+            <dt>Mysql</dt>
+            <dd>
+                <a href="#">DDL</a>&nbsp;&nbsp;
+                <a href="#">TCL</a>&nbsp;&nbsp;
+                <a href="#">DML</a>&nbsp;&nbsp;
+            </dd>
+        </dl>
+        <span>层次选择器2</span>
+    </div>
+</body>
+</html>

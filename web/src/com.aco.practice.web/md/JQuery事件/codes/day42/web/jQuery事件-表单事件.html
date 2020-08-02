@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单事件</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            // focus()：获得焦点时触发
+            // blur()：失去焦点时触发
+            $("input[name=username]").focus(function () {
+                $(this).addClass("tmp");
+            }).blur(function () {
+                $(this).removeClass("tmp");
+            });
+
+            // change()：选项改变事件
+            $("#sex").change(function () {
+                alert($(this).val());
+            });
+
+            $("#btnSave").click(function () {
+                //location.href="stuServlet?stuNo="+stuNo;
+                $("#actionForm").submit();
+            });
+        });
+    </script>
+    <style type="text/css">
+        .tmp {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <form action="http://www.baidu.com" method="get" id="actionForm">
+        姓名：<input name="username" placeholder="请输入姓名" /><br/>
+        年龄：<input name="age" placeholder="请输入年龄" /><br/>
+        性别：
+        <select id="sex">
+            <option value="">--请选择--</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+        <br/>
+        <input type="button" value="保存" id="btnSave" />
+    </form>
+</body>
+</html>

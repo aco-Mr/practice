@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery节点操作-购物车</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+           $(".add").click(function () {
+               var $table = $("<tr>\n" +
+                   "            <td><input type=\"checkbox\"></td>\n" +
+                   "            <td><img src=\"../image/computer.jpg\">联想笔记本电脑</td>\n" +
+                   "            <td>￥<span>3189.9</span></td>\n" +
+                   "            <td>1</td>\n" +
+                   "            <td>\n" +
+                   "                <a href=\"#\" class=\"del\">删除</a>\n" +
+                   "                <a href=\"#\" class=\"update\">修改</a>\n" +
+                   "            </td>\n" +
+                   "        </tr>");
+               $table.appendTo("table");
+           });
+
+           //单个删除
+           $(document).on("click",".del",function () {
+               $(this).parents("tr").remove();
+           });
+
+           //全选
+           $(document).on("click","#chkAll",function () {
+				var all = $(this).prop("checked");
+				$("input:checkbox").attr("checked",all);
+               // if($(this).attr("checked")){
+               //     $("input:checkbox").attr("checked",true);
+               // }else{
+               //     $("input:checkbox").attr("checked",false);
+               // }
+           });
+
+           //批量删除
+           $(document).on("click",".delAll",function () {
+               // var $input = $("input:checkbox");
+               // $input.each(function (index) {
+               //     if($($input[index]).attr("checked")){
+               //         $($input[index]).parents("tr").remove();
+               //     }
+               // });
+               //拿到全部复选框去除全选后，选上的框值
+               $("input[type=checkbox]:gt(0):checked").parents("tr").remove();
+           });
+
+           //计算总价
+            $(document).on("click",".calcPrice",function () {
+                var sum=0;
+                var $span = $("span");
+                $span.each(function (index) {
+                    //获取下一个节点
+                    var nums = $($span[index]).parents("td").next("td").text();
+                    //如果数量修改为input表单则获取表单中的value值
+                    if(nums==null||nums==0){
+                        nums = $($span[index]).parents("td").next("td").children("input").val();
+                    }
+                    // sum = accAdd(sum,parseFloat($($span[index]).text())) * nums;
+                    //乘100将钱的后两位小数点变为整数
+                    sum += $($span[index]).text() * 100 * nums;
+                });
+                $("#priceCount").val(sum/100);
+            });
+
+            //修改
+            $(document).on("click",".update",function () {
+                //获取上一个节点
+               var text = $(this).parents("td").prev("td").text();
+               //如果再次按修改要令表单中的值为上一个值
+               if(text==null||text==0){
+                   text = $(this).parents("td").prev("td").children("input").val();
+               }
+                $(this).parents("td").prev("td").html("<input type='text' value='"+text+"'>");
+
+            });
+
+        });
+
+        //防止精度缺失
+        function accAdd(arg1,arg2){
+            var r1,r2,m;
+            try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+            try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+            m=Math.pow(10,Math.max(r1,r2));
+            return (arg1*m+arg2*m)/m;
+        }
+
+    </script>
+</head>
+<body>
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            <th><input type="checkbox" id="chkAll">全选</th>
+            <th>商品名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td><img src="../image/sang.gif">天堂伞</td>
+            <td>￥<span>32.9</span></td>
+            <td>1</td>
+            <td>
+                <a href="#" class="del">删除</a>
+                <a href="#" class="update">修改</a>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td><img src="../image/iphone.gif">苹果手机</td>
+            <td>￥<span>3233.9</span></td>
+            <td>1</td>
+            <td>
+                <a href="#" class="del">删除</a>
+                <a href="#" class="update">修改</a>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td><img src="../image/computer.jpg">联想笔记本电脑</td>
+            <td>￥<span>3189.9</span></td>
+            <td>1</td>
+            <td>
+                <a href="#" class="del">删除</a>
+                <a href="#" class="update">修改</a>
+            </td>
+        </tr>
+    </table>
+    <input type="text" placeholder="商品总价" id="priceCount" />
+    <a href="#" class="add">添加</a>
+    <a href="#" class="delAll">批量删除</a>
+    <a href="#" class="calcPrice">计算商品总价</a>
+</body>
+</html>

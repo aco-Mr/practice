@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增题目</title>
+    <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+    <style type="text/css">
+        ol{
+            margin-top:2px;
+        }
+    </style>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="UTF-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            //新增选项
+            $("#addOption").click(function () {
+                $(topicOptions).append("<p><input type=\"text\" name=\"options\" />&nbsp;&nbsp;&nbsp;" +
+                    "<input type='button' class='del' value='删除'></p>");
+            });
+            //删除
+            $(document).on("click",".del",function () {
+                $(this).parents("p,ul").remove();
+            });
+
+            //新增题目
+            $("#addItem").click(function () {
+                //题目
+                var topicTitle = $("#topicTitle").val().trim();
+                //题目类型
+                var topicType = $("input[name=topicType]:checked").val();
+                //题目选项
+                var $options = $("#topicOptions>p>input[name=options]");
+                //记录数组内容
+                var count = 0;
+                //遍历
+                $options.each(function (i,ele) {
+                    if($(ele).val()!=null&&$(ele).val().trim()!=""){
+                        count++;
+                    }
+                });
+                //新增操作
+                if(topicTitle!=null && topicTitle!="" && count>=2){
+                    $("#content").prepend("<ul><li><h2 style='display: inline'>"+topicTitle+"</h2>" +
+                        "&nbsp;&nbsp;&nbsp;<input type='button' class='del' value='删除'></li></ul>");
+                    //新增题目选项
+                    $("#content>ul>li:first").append("<ol></ol>");
+                    //遍历数组
+                    $options.each(function (i,ele) {
+                        //判断是单选还是多选
+                        if(topicType==1){
+                            $("#content>ul>li:first>ol").append("<li><input type='radio' name=\"topicType\">" +
+                                ""+$(ele).val()+"</li>");
+                        }else{
+                            $("#content>ul>li:first>ol").append("<li><input type='checkbox' name=\"topicType\">" +
+                                ""+$(ele).val()+"</li>");
+                        }
+                    });
+
+                }
+
+                //显示和隐藏效果
+                $("h2").toggle(function () {
+                    $(this).next(".del").next("ol").hide();
+                },function () {
+                    $(this).next(".del").next("ol").show();
+                });
+
+
+                //判断非空
+                if(topicTitle==null||topicTitle==""){alert("题目不能为空")};
+                if(count<2){alert("题目选项不能少于2")};
+            });
+        })
+    </script>
+</head>
+<body>
+<form>
+    <fieldset style="width:500px">
+        <legend>新增考题</legend>
+        <div id="topic">
+            <dl>
+                <dt>题目：</dt>
+                <dd>
+                    <textarea id="topicTitle" title="填入题目内容"></textarea>
+                </dd>
+                <dt>题目类型：</dt>
+                <dd>
+                    <input type="radio" name="topicType" value="1" checked=checked/>单选
+                    <input type="radio" name="topicType" value="2" />多选
+                </dd>
+                <dt>题目选项：</dt>
+                <dd id="topicOptions">
+                    <p><input type="text" name="options" /></p>
+                    <p><input type="text" name="options" /></p>
+                </dd>
+                <dt></dt>
+                <dd class="button">
+                    <input type="button" id="addItem" value="增加题目" />
+                    <input type="button" id="addOption" value="增加选项" />
+                    <input type="reset" id="btnCancel" value="取消操作" />
+                </dd>
+            </dl>
+        </div>
+    </fieldset>
+</form>
+<div>新增加的考题如下：</div>
+<div id="content"></div>
+</body>
+</html>

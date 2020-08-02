@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录框特效</title>
+    <script src="../js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+
+
+            $(".text_username").focus(function () {
+                var username = $(".text_username").val().trim();
+                if(username == "通行账号/邮箱"){
+                    $(".text_username").val("");
+                }
+            }).blur(function () {
+                var username = $(".text_username").val().trim();
+                if(username == ""){
+                    $(".text_username").val("通行账号/邮箱");
+                }
+            });
+
+
+            $(".text_passwrd").focus(function () {
+                var val = $(".text_passwrd").val().trim();
+                if(val == "密码"){
+                    $(".text_passwrd").val("");
+                }
+            }).blur(function () {
+                var val = $(".text_passwrd").val().trim();
+                if(val == ""){
+                    $(".text_passwrd").val("密码");
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+<form>
+    <input type="text" name='username' class='text_username' value="通行账号/邮箱" />
+    <input type="text" name='passwrd' class='text_passwrd' value="密码"/>
+    <input type="submit" name='sub'  class='btn' value="登录"/>
+</form>
+</body>
+</html>

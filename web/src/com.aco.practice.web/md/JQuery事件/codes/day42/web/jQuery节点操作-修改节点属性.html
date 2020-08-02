@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改节点属性</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                // attr()
+                // 不带参数时取属性的值
+                // 带参数时就设置属性的值
+                $("img").attr('src','images/close.gif')
+            });
+        });
+    </script>
+</head>
+<body>
+    <img src="images/open.gif">
+    <input type="button" id="btn" value="修改图片">
+</body>
+</html>

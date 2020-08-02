@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本选择器</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("h2").click(function () {
+                // $("#box").css("background-color","yellow");//ID选择器
+                // $("h3").css("background-color","yellow");//标签选择器
+                // $(".title").css("background-color","yellow");//类选择器
+                // $("*").css("background-color","yellow");//通配符(全局)选择器
+                // $("h3,.title").css("background-color","yellow");//并集（或)选择器，分割符是","
+                $("h3.title").css("background-color","yellow");//交集(且)选择器
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="box">id为box的div
+        <h2 class="title">class为title的h2</h2>
+        <h3 class="title">class为title的h3</h3>
+        <h3>h3...</h3>
+        <div>div<span class="title">这是1个span标签</span></div>
+    </div>
+</body>
+</html>

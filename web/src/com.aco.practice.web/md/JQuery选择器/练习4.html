@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>练习4</title>
+    <style type="text/css">
+        body{font-size:13px}
+        #all{border:solid 1px #666;width:320px;overflow:hidden;}
+        #all #head{background-color:#eee;padding:8px;height:18px;cursor:hand}
+        #all #head h3{padding:0px;margin:0px;float:left}
+        #all #head span{float:right;margin-top:3px}
+        #all #content{padding:8px}
+        #all #content ul {list-style-type:none;margin:0px;padding:0px}
+        #all #content ul li{ float:left;width:95px;height:23px;line-height:23px}
+        #all #btn{float:right;padding-top:5px;padding-bottom:5px}
+    </style>
+
+    <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                if($("#btn>a").html()=="简化"){
+                    $("ul>li:not(:last):gt(5)").hide();
+                    $("#btn>a").html("更多");
+                }else{
+                    $("ul>li:gt(5)").show();
+                    $("#btn>a").html("简化");
+                }
+            });
+            $("#head>span>img").click(function () {
+                if($("#head>span>img").attr("src")=="./image/close.gif"){
+                    $("#all>div:gt(0)").hide();
+                    $("#head>span>img").attr("src","./image/open.gif");
+                }else{
+                    $("#all>div:gt(0)").show();
+                    $("#head>span>img").attr("src","./image/close.gif");
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+<div id="all">
+    <div id="head">
+        <h3>学科分类</h3>
+        <span><img src="./image/close.gif"/></span>
+    </div>
+    <div id="content">
+        <ul>
+            <li>
+                <a href="#">JavaEE</a><i> (1110) </i></li>
+            <li>
+                <a href="#">PHP</a><i> (230) </i></li>
+            <li>
+                <a href="#">BIG</a><i> (1430) </i></li>
+            <li>
+                <a href="#">Android</a><i> (1560) </i></li>
+            <li>
+                <a href="#">IOS</a><i> (870) </i></li>
+            <li>
+                <a href="#">H5</a><i> (1460) </i></li>
+            <li>
+                <a href="#">VR</a><i> (1450) </i></li>
+            <li>
+                <a href="#">小程序</a><i> (1780) </i></li>
+            <li>
+                <a href="#">演讲</a><i> (930) </i></li>
+            <li>
+                <a href="#">PPT</a><i> (3450) </i></li>
+            <li>
+                <a href="#">Word</a><i> (980) </i></li>
+            <li>
+                <a href="#">其他</a><i> (3230) </i></li>
+        </ul>
+        <div id="btn">
+            <a href="#">简化</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

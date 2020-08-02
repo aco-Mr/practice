@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绑定和解绑</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+           $("#btnAdd").click(function () {
+               // 为<div>元素添加绑定的事件，事件类型：click
+               $("div").bind('click',function () {
+                   $(this).css('color','red');
+               });
+           });
+            $("#btnDel").click(function () {
+                // 为了体现解除了绑定的click事件，先将颜色变为黑色
+                $("div").css('color','black');
+                // 将<div>元素解除绑定的事件，事件类型：click
+                $("div").unbind('click');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>这是1个Div</div>
+    <input type="button" id="btnAdd" value="绑定事件" /><br/>
+    <input type="button" id="btnDel" value="解绑事件" /><br/>
+</body>
+</html>

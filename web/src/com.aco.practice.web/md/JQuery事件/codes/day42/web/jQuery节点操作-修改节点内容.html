@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改节点内容</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnUpdateDiv").click(function () {
+                // html()：如果内容带<html>元素，那么可以进行解析
+                // text()：如果内容带<html>元素，那么不进行解析
+                // html()不带参数时就表示取值
+                var html = $("div").html();
+                // html()带参数时就表示设值
+                // $("div").html('<a href="#">'+html+'</a>');
+                $("div").text('<a href="#">'+html+'</a>');
+            });
+
+            $("#btnUpdateInput").click(function () {
+                // 哪个控件是取value属性值，哪些控件是没有value属性值的，指的本身这个控件的属性
+                // 可以取value属性的值的控件：表单控件
+                // input
+                // select
+                // textarea：文本域
+                // val()：只对应value属性的值，且是浏览器能够识别的标签元素
+                // 不带参数时是取value属性的值
+                // 带参数时设置value属性的值
+                var value = $("input[name=username]").val();
+                $("input[name=username]").val("test2");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>这是1个Div</div>
+    <input name="username" value="test1"><br/>
+    <input type="button" id="btnUpdateDiv" value="修改div的内容" /><br/>
+    <input type="button" id="btnUpdateInput" value="修改input的内容" /><br/>
+</body>
+</html>

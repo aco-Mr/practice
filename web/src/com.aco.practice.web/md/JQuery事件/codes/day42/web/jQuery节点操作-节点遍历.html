@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>节点遍历</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                // 将所有li的内容取出来，放入div中
+                var $lis = $("li");
+                // 字符串拼接
+                var strs = '';
+                // 数组来保存内容
+                var html = [];
+                // 1、使用普通的for
+                // for(var i=0;i<$lis.length;i++){
+                //     strs+=$($lis[i]).html()+",";
+                //     html.push($($lis[i]).html());
+                // }
+
+                // 2、使用jQuery的循环
+                // index：表示循环的下标
+                // ele：表示循环中的某个变量(var ele=$lis[i])
+                // $lis.each(function (index,ele) {
+                //     // var ele=$lis[index];
+                //     strs+=$($lis[index]).html()+",";
+                //     html.push($(ele).html());
+                // });
+
+                $.each($lis,function (index,ele) {
+                    // var ele=$lis[index];
+                    strs+=$($lis[index]).html()+",";
+                    html.push($(ele).html());
+                });
+
+                // 设置div里
+                // $("div").html(strs);
+                // join(分割符)：将数组里的内容以指定的分割符进行连接
+                $("div").html(html.join(","));
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul>
+        <li>Java</li>
+        <li>Mysql</li>
+        <li>Javascript</li>
+        <li>jQuery</li>
+        <li>css</li>
+    </ul>
+    <input type="button" id="btn" value="取内容" /><br/>
+    <div></div>
+</body>
+</html>

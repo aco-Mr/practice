@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery对象和Dom对象</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+
+                // Dom对象
+                var divObj = document.getElementById("div1");
+                var divHtml = divObj.innerHTML;
+                alert("dom:"+divHtml);
+
+                // jQuery对象
+                // document.getElementById("div1");对应$("#div1")
+                // divObj.innerHTML对应$("#div1").html()
+                var html = $("#div1").html();
+                alert("jquery:"+html);
+
+                // 通过dom对象调用jquery对象的方法
+                // alert("111:"+divObj.html());// 报错：不能混用dom对象和jquery对象的方法
+
+                // 将dom对象转换为jQuery
+                var $div = $(divObj);
+                alert('222:'+$div.html());
+
+                // 将jQuery对象转换为dom对象
+                var divObj2 = $("#div1")[0];
+                alert("333:"+divObj2.innerHTML);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="div1">这是1个Div</div>
+    <input type="button" id="btn" value="点我" /><br/>
+</body>
+</html>

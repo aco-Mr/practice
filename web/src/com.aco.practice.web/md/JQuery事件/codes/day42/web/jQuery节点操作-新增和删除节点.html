@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加和删除节点</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+           $("#btnAdd").click(function () {
+               // 添加新的元素
+               // A.append(B)：将B元素添加到A元素下
+               // A.appendTo(B)：将A元素添加到B元素下
+               // A.insertBefore(B)：将A元素添加到B元素之前
+               // A.insertAfter(B)：将A元素添加到B元素之后
+
+               var $li = $("<li>ajax</li>");
+               // A.append(B)：将B元素添加到A元素下
+               // $("ul").append($li);
+               // A.appendTo(B)：将A元素添加到B元素下
+               // $li.appendTo($("ul"));
+               // A.insertBefore(B)：将A元素添加到B元素之前
+               var lastLi = $("ul li:last");
+               // $li.insertBefore(lastLi);
+               // A.insertAfter(B)：将A元素添加到B元素之后
+               $li.insertAfter(lastLi);
+           });
+
+            $("#btnDel").click(function () {
+                $("li:last").remove();
+            });
+
+            $(".del").click(function () {
+                // parent()：获得是父亲这一辈的元素
+                // parents()：获得是父辈以上的元素
+                // $(this).parent().remove();
+                $(this).parents("li").remove();
+            });
+
+            $("#btnUpdate").click(function () {
+                var html = $("li:last").html();
+                $("li:last").html('<input type="text"/>');
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul>
+        <li>Java</li>
+        <li>Mysql<a href="#" class="del">删除</a></li>
+        <li>Javascript<a href="#" class="del">删除</a></li>
+        <li>jQuery</li>
+        <li>css<a href="#" class="del">删除</a></li>
+    </ul>
+    <input type="button" id="btnAdd" value="添加li" /><br/>
+    <input type="button" id="btnDel" value="删除li" /><br/>
+    <input type="button" id="btnUpdate" value="修改li" /><br/>
+</body>
+</html>

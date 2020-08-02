@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>练习3</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var flag=true;
+        $(function () {
+            $("tr:even").css("background","gray");
+            $("tr:eq(2)").css("background","#FFB6EE");
+
+            $(".more").click(function () {
+                if(flag){
+                    // $("tr:gt(4)").css("display","none");
+                    $("tr:gt(4)").hide();
+                    flag=false;
+                } else {
+                    // $("tr:gt(4)").css("display","block");
+                    $("tr:gt(4)").show();
+                    flag=true;
+                }
+            });
+        });
+
+    </script>
+    <style>
+        *{
+            color: ;
+        }
+    </style>
+</head>
+<body>
+    <h3>乐淘，发现更多生活，快乐就在你身边...</h3>
+    <h4>近期热门......<a href='#' class='more'>（更多）</a></h4>
+    <table width="800" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>语言之庭</td>
+        </tr>
+        <tr>
+            <td>斯托克</td>
+        </tr>
+        <tr>
+            <td>迷醉</td>
+        </tr>
+        <tr>
+            <td>巨人携手皆可</td>
+        </tr>
+        <tr>
+            <td>副作用</td>
+        </tr>
+        <tr>
+            <td>血肉之躯</td>
+        </tr>
+        <tr>
+            <td>7号房的礼物</td>
+        </tr>
+        <tr>
+            <td>惊声笑</td>
+        </tr>
+    </table>
+    <a href='#' class='more'>更多排名</a>
+</body>
+</html>

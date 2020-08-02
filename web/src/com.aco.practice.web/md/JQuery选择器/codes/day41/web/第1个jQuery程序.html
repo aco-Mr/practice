@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第1个jQuery程序</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        /*--
+           javascript:window.onload
+           1) 在加载完页面的内容之后才会执行的脚本
+           2) 只能设置一次（只会是最后1次设置的生效）
+        */
+
+        // window.onload = function () {
+        //     alert(111);
+        // };
+        // window.onload = function () {
+        //     alert(222);
+        // };
+
+        /*
+            jQuery:有三种设置方式，可以实现window.onload的效果，
+            1) 在加载完页面的内容之后才会执行的脚本
+            2) 在同一个页面内可以设置多次，都会生效
+         */
+        $(document).ready(function () {
+           alert("第一种");
+        });
+        $().ready(function () {
+           alert("第二种");
+        });
+        $(function () {
+           alert("第三种:简写形式")
+        });
+
+
+    </script>
+</head>
+<body>
+    <input type="text" />
+</body>
+</html>

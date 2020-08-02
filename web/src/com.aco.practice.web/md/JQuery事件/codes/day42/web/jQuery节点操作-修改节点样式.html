@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改节点样式</title>
+    <script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnAdd").click(function () {
+                // $("li:first").css("color","red");
+                // 添加样式
+                $("li:first").addClass("tmp");
+            });
+            $("#btnRemove").click(function () {
+                // 移除指定的样式名
+                $("li:first").removeClass("tmp");
+            });
+            $("#btnToggle").click(function () {
+                // 移除指定的样式名
+                $("li:first").toggleClass("tmp");
+            });
+        });
+    </script>
+    <style type="text/css">
+        .tmp{
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>Java</li>
+        <li>Mysql</li>
+    </ul>
+    <input type="button" id="btnAdd" value="添加样式">
+    <input type="button" id="btnRemove" value="移除样式">
+    <input type="button" id="btnToggle" value="添加或移除样式">
+</body>
+</html>
