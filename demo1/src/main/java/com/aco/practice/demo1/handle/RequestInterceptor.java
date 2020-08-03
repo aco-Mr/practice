@@ -37,15 +37,15 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     /** 之前 **/
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String requestURI = request.getRequestURI();
-        String pre = RedisKeyUtil.getRequestKey(requestURI);
-        log.info("请求路径：{}",requestURI);
+        String requestUri = request.getRequestURI();
+        String pre = RedisKeyUtil.getRequestKey(requestUri);
+        log.info("请求路径：{}",requestUri);
         for (String url : URL_PATH) {
-            if (url.equals(requestURI)){
+            if (url.equals(requestUri)){
                 return true;
             }
         }
-        redisTemplate.opsForValue().set(pre,requestURI,30, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(pre,requestUri,30, TimeUnit.SECONDS);
         log.info("" + redisTemplate.opsForValue().get(pre));
         String token = request.getHeader("token");
         if (StringUtils.isBlank(token)){
