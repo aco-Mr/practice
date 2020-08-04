@@ -3,6 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../css/host.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 点击登录
+            $(".btn").click(function () {
+                // 获取用户名称
+                let userName = $("#userName").val();
+                // 获取用户密码
+                let passWord = $("#passWord").val();
+                let url = demo1Url + ":" + demo1Post + "/aco/login/form";
+                $.ajax({
+                    url : url,
+                    type : 'post',
+                    data : {"name":userName,"password":passWord},
+                    timeout : 15000, // 超时时间，15秒
+                    dataType : 'json',
+                    // 回调
+                    success : function (data) {
+                        alert(data.data);
+                    }
+                })
+            });
+        })
+    </script>
     <style>
         body{
             text-align: center;
@@ -19,7 +44,7 @@
             color: rgba(1,9,17,0.84);
             box-shadow: 0 0 8px #eeeeee;
         }
-        .input{
+        .ipt {
             margin-top: 3%;
             width: 60%;
             height: 30px;
@@ -50,17 +75,15 @@
 <body>
     <div class="loging">
         <h1 style="margin-top: 15%;text-shadow: 0 0 10px white">欢迎登录</h1>
-        <form id="userFrom">
-            <h2 style="display: inline;text-shadow: 0 0 10px white">姓名：</h2>
-            <label>
-                <input type="text" class="input" name="userName" maxlength="20"/>
-            </label><br/>
-            <h2 style="display: inline;text-shadow: 0 0 10px white">密码：</h2>
-            <label>
-                <input type="password" class="input" name="passWord" min="1" max="50" maxlength="35"/>
-            </label><br/>
-            <button name="btn" class="btn">登录</button>
-        </form>
+        <h2 style="display: inline;text-shadow: 0 0 10px white">姓名：</h2>
+        <label>
+            <input type="text" class="ipt" id="userName" name="userName" maxlength="20"/>
+        </label><br/>
+        <h2 style="display: inline;text-shadow: 0 0 10px white">密码：</h2>
+        <label>
+            <input type="password" class="ipt" id="passWord" name="passWord" min="1" max="50" maxlength="35"/>
+        </label><br/>
+        <button name="btn" class="btn">登录</button>
     </div>
 </body>
 </html>
