@@ -22,7 +22,17 @@
                     dataType : 'json',
                     // 回调
                     success : function (data) {
-                        alert(data.data);
+                        let code = data.code;
+                        // 登录成功
+                        if (code === 200){
+                            let token = data.data;
+                            window.sessionStorage.setItem('token',token);
+                            location.href = "./index.html";
+                        }
+                        // 登录失败
+                        else if (code !== 200){
+                            alert(data.msg);
+                        }
                     }
                 })
             });
