@@ -37,7 +37,7 @@ public class UploadFileController {
         String extension = "." + FilenameUtils.getExtension(file.getOriginalFilename());
 
         //生成新的文件名称
-        String newFileName = IdUtil.getUUID() + extension;
+        String newFileName = IdUtil.get32UUID() + extension;
 
         //文件的类型
         String type = file.getContentType();

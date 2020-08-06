@@ -19,6 +19,15 @@ public class RedisKeyUtil {
      * @return
      */
     public static String getUserTokenKey(String userId){
-        return userId + ":" + IdUtil.getUUID();
+        return userId + ":" + IdUtil.get32UUID();
+    }
+
+    /**
+     * 生成用户登录key
+     * @param userId
+     * @return
+     */
+    public static String getUserLoginKey(String userId){
+        return userId;
     }
 }

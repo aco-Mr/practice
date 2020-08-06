@@ -31,7 +31,8 @@
                         }
                         // 登录失败
                         else if (code !== 200){
-                            alert(data.msg);
+                            let failMsg = data.data.msg;
+                            alert(failMsg);
                         }
                     }
                 })

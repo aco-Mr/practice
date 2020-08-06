@@ -43,7 +43,7 @@ public class UserController {
     public ResponseEntity login(UserDto userDto){
         String token = userService.login(userDto);
         if (token == null){
-            return ResponseEntity.ok().body(ApiResponseResult.error(ApiHttpCode.ERROR.getCode(),"登录失败"));
+            return ResponseEntity.ok().body(ApiResponseResult.error(ApiHttpCode.ERROR.getCode(),"账号用户或密码错误"));
         }
         return ResponseEntity.ok().body(ApiResponseResult.ok(ApiHttpCode.SUCCESS.getCode(),"登录成功",token));
     }
