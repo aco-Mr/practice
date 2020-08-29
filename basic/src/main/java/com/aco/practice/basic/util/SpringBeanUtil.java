@@ -1,4 +1,4 @@
-package com.aco.practice.demo1.util;
+package com.aco.practice.basic.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -4,13 +4,7 @@ import com.aco.practice.demo1.domain.entity.ScheduledConfigEntity;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
 import com.aco.practice.demo1.util.SpringBeanUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.Resource;
 
 /**
  * @Author: HaoJianXu
