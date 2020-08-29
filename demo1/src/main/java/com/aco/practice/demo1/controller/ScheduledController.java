@@ -1,8 +1,8 @@
 package com.aco.practice.demo1.controller;
 
+import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.domain.request.dto.ScheduledConfigDto;
 import com.aco.practice.demo1.service.ScheduledConfigService;
-import com.aco.practice.demo1.util.ApiResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

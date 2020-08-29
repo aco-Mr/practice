@@ -1,8 +1,8 @@
 package com.aco.practice.demo1.task;
 
+import com.aco.practice.basic.util.SpringBeanUtil;
 import com.aco.practice.demo1.domain.entity.ScheduledConfigEntity;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
-import com.aco.practice.demo1.util.SpringBeanUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 

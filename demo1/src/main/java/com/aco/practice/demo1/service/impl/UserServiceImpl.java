@@ -1,12 +1,12 @@
 package com.aco.practice.demo1.service.impl;
 
+import com.aco.practice.basic.util.RedisKeyUtil;
 import com.aco.practice.demo1.domain.emnu.StateEnum;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.request.dto.UserDto;
 import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.mapper.UserMapper;
 import com.aco.practice.demo1.service.UserService;
-import com.aco.practice.demo1.util.RedisKeyUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

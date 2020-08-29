@@ -1,7 +1,7 @@
 package com.aco.practice.demo1.controller;
 
+import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.service.SendRabbitMqService;
-import com.aco.practice.demo1.util.ApiResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.config;
 
-import com.aco.practice.demo1.util.ApiHttpCode;
+import com.aco.practice.basic.util.ApiHttpCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;

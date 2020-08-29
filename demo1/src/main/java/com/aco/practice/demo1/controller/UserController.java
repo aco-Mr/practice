@@ -1,10 +1,10 @@
 package com.aco.practice.demo1.controller;
 
+import com.aco.practice.basic.util.ApiHttpCode;
+import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.request.dto.UserDto;
 import com.aco.practice.demo1.service.UserService;
-import com.aco.practice.demo1.util.ApiHttpCode;
-import com.aco.practice.demo1.util.ApiResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

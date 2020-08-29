@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.exception;
 
-import com.aco.practice.demo1.util.ApiHttpCode;
+import com.aco.practice.basic.util.ApiHttpCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 

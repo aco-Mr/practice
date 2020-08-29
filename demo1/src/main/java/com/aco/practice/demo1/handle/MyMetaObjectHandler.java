@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.handle;
 
-import com.aco.practice.demo1.util.IdUtil;
+import com.aco.practice.basic.util.IdUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -20,7 +20,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         if (metaObject.hasGetter("id")){
-            this.setFieldValByName("id",IdUtil.get32UUID(),metaObject);
+            this.setFieldValByName("id", IdUtil.get32UUID(),metaObject);
         }
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());

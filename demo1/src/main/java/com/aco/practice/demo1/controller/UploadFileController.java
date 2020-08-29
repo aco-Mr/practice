@@ -1,9 +1,9 @@
 package com.aco.practice.demo1.controller;
 
+import com.aco.practice.basic.util.ApiResponseResult;
+import com.aco.practice.basic.util.IdUtil;
 import com.aco.practice.demo1.domain.request.dto.FileDto;
 import com.aco.practice.demo1.service.UploadService;
-import com.aco.practice.demo1.util.ApiResponseResult;
-import com.aco.practice.demo1.util.IdUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
