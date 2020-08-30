@@ -17,7 +17,6 @@
 
     <modules>
         <module>demo1</module>
-        <module>basic</module>
     </modules>
 
     <properties>

@@ -3,7 +3,7 @@ package com.aco.practice.demo1.handle;
 import com.aco.practice.basic.util.ApiHttpCode;
 import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.exception.CustomException;
-import com.aco.practice.demo1.response.ErrorInfo;
+import com.aco.practice.basic.response.ErrorInfo;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

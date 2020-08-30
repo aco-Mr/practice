@@ -1,4 +1,4 @@
-package com.aco.practice.demo1.response;
+package com.aco.practice.basic.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
