@@ -14,15 +14,24 @@ import java.io.IOException;
 public class ConsumerDemoMq {
     private static final String QUEUE_NAME = "aco_worker";
 
+    private static final String QUEUE_FANOUT_NAME = "aco_queue_fanout2";
+
+    public static final String EXCHANGE_NAME = "aco_exchange";
+
     public static void main(String[] args) {
         try {
-            consumerMessage();
+//            consumerQueueMessage();
+            consumerExchangeMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void consumerMessage() throws Exception{
+    /**
+     * 消费指定队列的消息
+     * @throws Exception
+     */
+    public static void consumerQueueMessage() throws Exception{
         // 获取连接
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 从连接中创建通道
@@ -64,5 +73,29 @@ public class ConsumerDemoMq {
          */
         // 启用手动确认消息，设置消费者的basicQos的预期数量时，必须为手动确认模式
         channel.basicConsume(QUEUE_NAME,false,consumer);
+    }
+
+    public static void consumerExchangeMessage() throws Exception {
+        //创建连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        //创建通道
+        Channel channel = connection.createChannel();
+        //定义队列
+        channel.queueDeclare(QUEUE_FANOUT_NAME,false,false,false,null);
+        //绑定交换机
+        channel.queueBind(QUEUE_FANOUT_NAME,EXCHANGE_NAME,"");
+        //设置预消费数量
+        channel.basicQos(1);
+        //定义消费者
+        DefaultConsumer consumer = new DefaultConsumer(channel){
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                log.info("消费者2 --> 消费发布订阅模式发送内容，内容：{}",new String(body));
+                // 手动应答生产者
+                channel.basicAck(envelope.getDeliveryTag(),false);
+            }
+        };
+        //消费发布信息
+        channel.basicConsume(QUEUE_FANOUT_NAME,false,consumer);
     }
 }

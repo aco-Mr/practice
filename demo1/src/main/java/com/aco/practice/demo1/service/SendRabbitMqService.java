@@ -15,5 +15,11 @@ public interface SendRabbitMqService {
      * 发送消息
      * @param object
      */
-    void sendMessage(Object object);
+    void sendQueueMessage(Object object);
+
+    /**
+     * 发布订阅模式消费信息
+     * @param object
+     */
+    void sendExchangeMessage(Object object);
 }

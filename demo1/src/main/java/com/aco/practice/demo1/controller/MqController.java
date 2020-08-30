@@ -41,6 +41,12 @@ public class MqController {
     @ApiOperation(value = "发送消息")
     @PostMapping("/mq/sendMessage")
     public void sendmessage(@RequestBody Object object){
-        sendRabbitMqService.sendMessage(object);
+        sendRabbitMqService.sendQueueMessage(object);
+    }
+
+    @ApiOperation(value = "发布消息")
+    @PostMapping("/mq/sendExchangeMessage")
+    public void sendExchangeMessage(@RequestBody Object object){
+        sendRabbitMqService.sendExchangeMessage(object);
     }
 }

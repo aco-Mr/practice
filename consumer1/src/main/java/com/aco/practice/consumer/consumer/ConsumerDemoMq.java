@@ -14,15 +14,24 @@ import java.io.IOException;
 public class ConsumerDemoMq {
     private static final String QUEUE_NAME = "aco_worker";
 
+    private static final String QUEUE_FANOUT_NAME = "aco_queue_fanout1";
+
+    public static final String EXCHANGE_NAME = "aco_exchange";
+
     public static void main(String[] args) {
         try {
-            consumerMessage();
+//            consumerQueueMessage();
+            consumerExchangeMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void consumerMessage() throws Exception{
+    /**
+     * 消费指定队列的消息
+     * @throws Exception
+     */
+    public static void consumerQueueMessage() throws Exception{
         // 获取连接
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 从连接中创建通道
@@ -52,12 +61,49 @@ public class ConsumerDemoMq {
                 channel.basicAck(envelope.getDeliveryTag(),false);
             }
         };
-        // 创建一个消费者(监控者),消费消息
         /**
+         * 创建一个消费者(监控者),消费消息
          * 1.队列名
          * 2.是否自动确认收到消息 true：自动告诉发送者收到消息，false：手动确认收到消息
          */
         // 启用手动确认消息，设置消费者的basicQos的预期数量时，必须为手动确认模式
         channel.basicConsume(QUEUE_NAME,false,consumer);
+    }
+
+    /**
+     * 发布订阅模式，消费指定交换机发布的内容
+     * @throws Exception
+     */
+    public static void consumerExchangeMessage() throws Exception {
+        //获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        //创建通道
+        Channel channel = connection.createChannel();
+        //创建队列
+        channel.queueDeclare(QUEUE_FANOUT_NAME,false,false,false,null);
+        //绑定交换机
+        channel.queueBind(QUEUE_FANOUT_NAME,EXCHANGE_NAME,"");
+        //定义预消费数量
+        channel.basicQos(1);
+        //定义消费者
+        DefaultConsumer consumer = new DefaultConsumer(channel){
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                //消费消息
+                log.info("消费者1 --> 消费发布订阅模式发送内容，内容：{}",new String(body));
+                /**
+                 * 1.交换机名称
+                 * 2.是否对所有未应答的消费者进行应答
+                 */
+                channel.basicAck(envelope.getDeliveryTag(),false);
+            }
+        };
+
+        /**
+         * 创建消费者，消费消息
+         * 1.队列名称
+         * 2.是否启动自动应答
+         */
+        channel.basicConsume(QUEUE_FANOUT_NAME,false,consumer);
     }
 }

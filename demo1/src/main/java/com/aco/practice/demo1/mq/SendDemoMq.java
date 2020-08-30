@@ -13,7 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 public class SendDemoMq {
     private static final String QUEUE_NAME = "aco_worker";
 
-    public static void sendMq(Object object) throws Exception{
+    public static final String EXCHANGE_NAME = "aco_exchange";
+
+    /**
+     * 向指定队列发布消息
+     * @param object
+     * @throws Exception
+     */
+    public static void sendQueueMq(Object object) throws Exception{
         // 获取连接
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 从连接中创建通道
@@ -42,5 +49,33 @@ public class SendDemoMq {
         channel.close();
         connection.close();
 
+    }
+
+    /**
+     * 发布订阅模式，对绑定到同一个交换机的队列同时发送信息
+     * @param object
+     * @throws Exception
+     */
+    public static void sendFanoutMq(Object object) throws Exception {
+        // 获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        // 创建通道
+        Channel channel = connection.createChannel();
+        // 定义交换机，若交换机不存在则创建，存在则使用
+        channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
+        // 发送信息
+        String message = "Hello Aco Exchange " + String.valueOf(object);
+        /**
+         * 对指定的交换机发送消息
+         * 1.交换机名称
+         * 2.队列名称
+         * 3.基础参数
+         * 4.消息内容
+         */
+        channel.basicPublish(EXCHANGE_NAME,"",null,message.getBytes());
+        //关闭通道
+        channel.close();
+        //关闭连接
+        connection.close();
     }
 }

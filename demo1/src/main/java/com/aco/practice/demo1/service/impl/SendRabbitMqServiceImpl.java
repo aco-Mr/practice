@@ -23,13 +23,25 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
     }
 
     @Override
-    public void sendMessage(Object object) {
+    public void sendQueueMessage(Object object) {
         try {
             for (int i = 0; i < 20; i++) {
-                SendDemoMq.sendMq(String.valueOf(object) + i);
+                SendDemoMq.sendQueueMq(String.valueOf(object) + i);
             }
         } catch (Exception e) {
             log.error("发送消息失败！");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendExchangeMessage(Object object) {
+        try {
+            for (int i = 0; i < 20; i++) {
+                log.info("发送消息 --- {}",String.valueOf(object) + i);
+                SendDemoMq.sendFanoutMq(object);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
