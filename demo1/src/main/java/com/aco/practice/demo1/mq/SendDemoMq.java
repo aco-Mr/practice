@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.mq;
 
-import com.aco.practice.basic.util.ConnectionUtil;
+import com.aco.practice.demo1.util.ConnectionUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class SendDemoMq {
-    private static final String QUEUE_WORKER = "aco_worker";
+    private static final String QUEUE_NAME = "aco_worker";
 
     public static void sendMq(Object object) throws Exception{
         // 获取连接
@@ -26,21 +26,21 @@ public class SendDemoMq {
          * 4.是否自动删除队列中的消息   true：断开连接并删除消息，false：断开连接不会删除消息
          * 5.其它额外参数
          */
-        channel.queueDeclare(QUEUE_WORKER,false,false,false,null);
+        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
         // 发送消息
         // 消息内容
-        String message = "Hello Aco";
+        String message = "Hello Aco " + String.valueOf(object);
         /**
          * 1.交换机名称
          * 2.队列名称
          * 3.BasicProperties 基础参数
          * 4.消息内容的字节数组
          */
-        channel.basicPublish("",QUEUE_WORKER,null,message.getBytes());
-        log.info("发送消息：{}" + message);
-        // 关闭连接和通道
-        connection.close();
+        channel.basicPublish("", QUEUE_NAME,null,message.getBytes());
+        log.info("发送消息：{}",message);
+        // 关闭连接和通道，先关闭通道，再关闭连接
         channel.close();
+        connection.close();
 
     }
 }

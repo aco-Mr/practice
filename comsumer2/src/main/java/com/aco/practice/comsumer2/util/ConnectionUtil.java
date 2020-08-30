@@ -1,4 +1,4 @@
-package com.aco.practice.basic.util;
+package com.aco.practice.comsumer2.util;
 
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -18,12 +18,12 @@ public class ConnectionUtil {
         // 定义连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         // 设置服务地址
-        factory.setHost("");
+        factory.setHost("47.103.193.66");
         // 设置端口
-        factory.setPort(5679);
+        factory.setPort(5672);
         // 设置账号信息，vhost、用户名、密码
         factory.setVirtualHost("aco_virtual");
-        factory.setUsername("aco");
+        factory.setUsername("admin");
         factory.setPassword("123456");
         // 通过获取工程获取连接
         Connection connection = factory.newConnection();

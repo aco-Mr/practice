@@ -10,4 +10,10 @@ public interface SendRabbitMqService {
      * @param message
      */
     void sendEmail(String message);
+
+    /**
+     * 发送消息
+     * @param object
+     */
+    void sendMessage(Object object);
 }

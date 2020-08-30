@@ -1,0 +1,7 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /aco
+spring:
+  profiles:
+    active: local
