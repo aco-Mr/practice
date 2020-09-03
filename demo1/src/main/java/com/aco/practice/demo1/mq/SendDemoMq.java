@@ -61,7 +61,11 @@ public class SendDemoMq {
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 创建通道
         Channel channel = connection.createChannel();
-        // 定义交换机，若交换机不存在则创建，存在则使用
+        /**
+         * 定义交换机，若交换机不存在则创建，存在则使用
+         * 1.交换机名称
+         * 2.交换机类型
+         */
         channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
         // 发送信息
         String message = "Hello Aco Exchange " + String.valueOf(object);
