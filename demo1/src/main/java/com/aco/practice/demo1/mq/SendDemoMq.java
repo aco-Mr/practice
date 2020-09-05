@@ -15,6 +15,8 @@ public class SendDemoMq {
 
     public static final String EXCHANGE_NAME = "aco_exchange";
 
+    public static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
+
     /**
      * 向指定队列发布消息
      * @param object
@@ -81,5 +83,29 @@ public class SendDemoMq {
         channel.close();
         //关闭连接
         connection.close();
+    }
+
+    /**
+     * 交换机路由模式
+     * @param object
+     * @param routingKey
+     * @throws Exception
+     */
+    public static void sendDirectMq(Object object,String routingKey) throws Exception {
+        // 获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        // 创建通道
+        Channel channel = connection.createChannel();
+        // 声明交换机
+        channel.exchangeDeclare(EXCHANGE_DIRECT_NAME,"direct");
+        // 发送消息
+        String message = String.valueOf(object);
+        channel.basicPublish(EXCHANGE_DIRECT_NAME,routingKey,null,message.getBytes());
+        log.info("路由模式发送消息 ---> 发送信息：{}",message);
+        // 关闭通道
+        channel.close();
+        // 关闭连接
+        connection.close();
+
     }
 }

@@ -18,8 +18,15 @@ public interface SendRabbitMqService {
     void sendQueueMessage(Object object);
 
     /**
-     * 发布订阅模式消费信息
+     * 发布订阅模式发布信息
      * @param object
      */
     void sendExchangeMessage(Object object);
+
+    /**
+     * 路由模式发布消息
+     * @param object
+     * @param routingKey
+     */
+    void sendExchangeDirectMessage(Object object,String routingKey);
 }

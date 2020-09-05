@@ -16,12 +16,17 @@ public class ConsumerDemoMq {
 
     private static final String QUEUE_FANOUT_NAME = "aco_queue_fanout1";
 
+    private static final String QUEUE_DIRECT_NAME = "aco_queue_direct1";
+
     public static final String EXCHANGE_NAME = "aco_exchange";
+
+    public static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
 
     public static void main(String[] args) {
         try {
 //            consumerQueueMessage();
-            consumerExchangeMessage();
+//            consumerExchangeMessage();
+            consumerExchangeDirectMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,6 +73,10 @@ public class ConsumerDemoMq {
          */
         // 启用手动确认消息，设置消费者的basicQos的预期数量时，必须为手动确认模式
         channel.basicConsume(QUEUE_NAME,false,consumer);
+        // 关闭通道
+//        channel.close();
+        // 关闭连接
+//        connection.close();
     }
 
     /**
@@ -105,5 +114,43 @@ public class ConsumerDemoMq {
          * 2.是否启动自动应答
          */
         channel.basicConsume(QUEUE_FANOUT_NAME,false,consumer);
+        // 关闭通道
+//        channel.close();
+        // 关闭连接
+//        connection.close();
+    }
+
+    /**
+     * 消费指定交换机路由发布的消息
+     * @throws Exception
+     */
+    public static void consumerExchangeDirectMessage() throws Exception {
+        // 获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        // 获取通道
+        Channel channel = connection.createChannel();
+        // 指定预消费数量
+        channel.basicQos(1);
+        // 声明队列
+        channel.queueDeclare(QUEUE_DIRECT_NAME,false,false,false,null);
+        // 绑定交换机，指定多个路由
+        channel.queueBind(QUEUE_DIRECT_NAME,EXCHANGE_DIRECT_NAME,"info");
+        channel.queueBind(QUEUE_DIRECT_NAME,EXCHANGE_DIRECT_NAME,"error");
+        // 声明消费者
+        DefaultConsumer consumer = new DefaultConsumer(channel){
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                // 消费消息
+                log.info("消费者1 ---> 交换机名称：{}，路由key：{}，消费路由消息：{}",envelope.getDeliveryTag(),envelope.getRoutingKey(),new String(body));
+                // 回答生产者
+                channel.basicAck(envelope.getDeliveryTag(),false);
+            }
+        };
+        // 创建消费者
+        channel.basicConsume(QUEUE_DIRECT_NAME,false,consumer);
+        // 关闭通道
+//        channel.close();
+        // 关闭连接
+//        connection.close();
     }
 }

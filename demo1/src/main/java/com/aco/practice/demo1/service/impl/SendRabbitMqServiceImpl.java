@@ -45,4 +45,16 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void sendExchangeDirectMessage(Object object,String routingKey) {
+        try {
+            for (int i = 0; i < 20; i++) {
+                log.info("发送消息 --- {}",String.valueOf(object) + i);
+                SendDemoMq.sendDirectMq(object,routingKey);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

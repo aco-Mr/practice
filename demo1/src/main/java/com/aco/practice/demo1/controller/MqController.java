@@ -44,9 +44,15 @@ public class MqController {
         sendRabbitMqService.sendQueueMessage(object);
     }
 
-    @ApiOperation(value = "发布消息")
+    @ApiOperation(value = "发布订阅模式-发布消息")
     @PostMapping("/mq/sendExchangeMessage")
     public void sendExchangeMessage(@RequestBody Object object){
         sendRabbitMqService.sendExchangeMessage(object);
+    }
+
+    @ApiOperation(value = "路由器模式-发布消息")
+    @GetMapping("/mq/sendExchangeDirectMessage")
+    public void sendExchangeDirectMessage(Object object,String routingKey){
+        sendRabbitMqService.sendExchangeDirectMessage(object,routingKey);
     }
 }
