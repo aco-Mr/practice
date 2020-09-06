@@ -66,6 +66,8 @@ public class SendDemoMq {
         // 创建通道
         Channel channel = connection.createChannel();
         /**
+         *
+         * 声明交换机 (交换机名, 交换机类型, 是否持久化, 是否自动删除, 是否是内部交换机, 交换机属性)
          * 定义交换机，若交换机不存在则创建，存在则使用
          * 1.交换机名称
          * 2.交换机类型
@@ -99,6 +101,7 @@ public class SendDemoMq {
         // 创建通道
         Channel channel = connection.createChannel();
         // 声明交换机
+        // 声明交换机 (交换机名, 交换机类型, 是否持久化, 是否自动删除, 是否是内部交换机, 交换机属性)
         channel.exchangeDeclare(EXCHANGE_DIRECT_NAME,"direct");
         // 发送消息
         String message = String.valueOf(object);
@@ -123,6 +126,7 @@ public class SendDemoMq {
         // 创建通道
         Channel channel = connection.createChannel();
         // 声明交换机
+        // 声明交换机 (交换机名, 交换机类型, 是否持久化, 是否自动删除, 是否是内部交换机, 交换机属性)
         channel.exchangeDeclare(EXCHANGE_TOPIC_NAME,"topic");
         // 发送消息
         String message = String.valueOf(object);
