@@ -26,7 +26,7 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
     public void sendQueueMessage(Object object) {
         try {
             for (int i = 0; i < 20; i++) {
-                SendDemoMq.sendQueueMq(String.valueOf(object) + i);
+                SendDemoMq.sendWorkQueueMq(String.valueOf(object) + i);
             }
         } catch (Exception e) {
             log.error("发送消息失败！");
@@ -39,7 +39,7 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
         try {
             for (int i = 0; i < 20; i++) {
                 log.info("发送消息 --- {}",String.valueOf(object) + i);
-                SendDemoMq.sendFanoutMq(object);
+                SendDemoMq.sendSubscribeMq(object);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,6 +52,18 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
             for (int i = 0; i < 20; i++) {
                 log.info("发送消息 --- {}",String.valueOf(object) + i);
                 SendDemoMq.sendDirectMq(object,routingKey);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendExchangeTopicMessage(Object object, String topicKey) {
+        try {
+            for (int i = 0; i < 20; i++) {
+                log.info("发送消息 --- {}",String.valueOf(object) + i);
+                SendDemoMq.sendTopicMq(object,topicKey);
             }
         } catch (Exception e) {
             e.printStackTrace();

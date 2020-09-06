@@ -29,4 +29,11 @@ public interface SendRabbitMqService {
      * @param routingKey
      */
     void sendExchangeDirectMessage(Object object,String routingKey);
+
+    /**
+     * 主题模式发布消息
+     * @param object
+     * @param topicKey
+     */
+    void sendExchangeTopicMessage(Object object,String topicKey);
 }

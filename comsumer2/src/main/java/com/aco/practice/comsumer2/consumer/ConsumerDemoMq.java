@@ -19,15 +19,20 @@ public class ConsumerDemoMq {
 
     private static final String QUEUE_DIRECT_NAME = "aco_queue_direct2";
 
-    public static final String EXCHANGE_NAME = "aco_exchange";
+    private static final String QUEUE_TOPIC_NAME = "aco_queue_topic2";
 
-    public static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
+    private static final String EXCHANGE_NAME = "aco_exchange";
+
+    private static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
+
+    private static final String EXCHANGE_TOPIC_NAME = "aco_exchange_topic";
 
     public static void main(String[] args) {
         try {
 //            consumerQueueMessage();
 //            consumerExchangeMessage();
-            consumerExchangeDirectMessage();
+//            consumerExchangeDirectMessage();
+            consumerExchangeTopicMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,5 +149,34 @@ public class ConsumerDemoMq {
 //        channel.close();
         // 关闭连接
 //        connection.close();
+    }
+
+    /**
+     * 消费主题模式发布的消息
+     * @throws Exception
+     */
+    public static void consumerExchangeTopicMessage() throws Exception {
+        // 获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        // 创建通道
+        Channel channel = connection.createChannel();
+        // 声明预取数量
+        channel.basicQos(1);
+        // 声明队列
+        channel.queueDeclare(QUEUE_TOPIC_NAME,false,false,false,null);
+        // 绑定交换机
+        channel.queueBind(QUEUE_TOPIC_NAME,EXCHANGE_TOPIC_NAME,"aco.*");
+        // 声明消费者
+        DefaultConsumer consumer = new DefaultConsumer(channel){
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                // 消费消息
+                log.info("消费者2 ---> 指定{}主题消费消息，交换机名称：{}，消费内容：{}",envelope.getRoutingKey(),envelope.getDeliveryTag(),new String(body));
+                // 回答生产者
+                channel.basicAck(envelope.getDeliveryTag(),false);
+            }
+        };
+        // 消费消息
+        channel.basicConsume(QUEUE_TOPIC_NAME,false,consumer);
     }
 }

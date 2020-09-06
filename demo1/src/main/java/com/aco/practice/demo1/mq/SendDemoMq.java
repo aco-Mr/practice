@@ -13,16 +13,18 @@ import lombok.extern.slf4j.Slf4j;
 public class SendDemoMq {
     private static final String QUEUE_NAME = "aco_worker";
 
-    public static final String EXCHANGE_NAME = "aco_exchange";
+    private static final String EXCHANGE_NAME = "aco_exchange";
 
-    public static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
+    private static final String EXCHANGE_DIRECT_NAME = "aco_exchange_direct";
+
+    private static final String EXCHANGE_TOPIC_NAME = "aco_exchange_topic";
 
     /**
      * 向指定队列发布消息
      * @param object
      * @throws Exception
      */
-    public static void sendQueueMq(Object object) throws Exception{
+    public static void sendWorkQueueMq(Object object) throws Exception{
         // 获取连接
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 从连接中创建通道
@@ -58,7 +60,7 @@ public class SendDemoMq {
      * @param object
      * @throws Exception
      */
-    public static void sendFanoutMq(Object object) throws Exception {
+    public static void sendSubscribeMq(Object object) throws Exception {
         // 获取连接
         Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
         // 创建通道
@@ -107,5 +109,27 @@ public class SendDemoMq {
         // 关闭连接
         connection.close();
 
+    }
+
+    /**
+     * 主题模式
+     * @param object
+     * @param topicKey  *匹配单个单词    #匹配零个或多个单词
+     * @throws Exception
+     */
+    public static void sendTopicMq(Object object,String topicKey) throws Exception {
+        // 获取连接
+        Connection connection = ConnectionUtil.getRabbitMqConnectionFactory();
+        // 创建通道
+        Channel channel = connection.createChannel();
+        // 声明交换机
+        channel.exchangeDeclare(EXCHANGE_TOPIC_NAME,"topic");
+        // 发送消息
+        String message = String.valueOf(object);
+        channel.basicPublish(EXCHANGE_TOPIC_NAME,topicKey,null,message.getBytes());
+        // 关闭通道
+        channel.close();
+        // 关闭连接
+        connection.close();
     }
 }
