@@ -1,6 +1,6 @@
 package com.aco.practice.demo1.service.impl;
 
-import com.aco.practice.demo1.mq.SendDemoMq;
+import com.aco.practice.demo1.mq.rabbit.SendDemoMq;
 import com.aco.practice.demo1.service.SendRabbitMqService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;

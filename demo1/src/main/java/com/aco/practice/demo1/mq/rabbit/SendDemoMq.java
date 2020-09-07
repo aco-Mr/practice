@@ -1,4 +1,4 @@
-package com.aco.practice.demo1.mq;
+package com.aco.practice.demo1.mq.rabbit;
 
 import com.aco.practice.demo1.util.ConnectionUtil;
 import com.rabbitmq.client.Channel;

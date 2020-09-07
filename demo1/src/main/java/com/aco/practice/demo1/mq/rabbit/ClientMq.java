@@ -1,13 +1,11 @@
-package com.aco.practice.demo1.mq;
+package com.aco.practice.demo1.mq.rabbit;
 
 import com.aco.practice.basic.util.IdUtil;
 import com.aco.practice.demo1.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @Author: HaoJianXu

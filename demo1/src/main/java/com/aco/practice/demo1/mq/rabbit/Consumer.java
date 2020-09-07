@@ -1,4 +1,4 @@
-package com.aco.practice.demo1.mq;
+package com.aco.practice.demo1.mq.rabbit;
 
 import io.swagger.annotations.ApiModel;
 import lombok.extern.slf4j.Slf4j;
