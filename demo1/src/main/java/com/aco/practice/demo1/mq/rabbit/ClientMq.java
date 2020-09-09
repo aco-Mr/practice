@@ -15,6 +15,10 @@ import java.io.IOException;
 public class ClientMq {
     private static final String RPC_QUEUE_NAME = "aco_rpc_queue";
 
+    /**
+     * RPC模式发送消息
+     * @param object
+     */
     public static void sendRpcMq(Object object){
         Connection connection = null;
         Channel channel = null;
@@ -37,9 +41,9 @@ public class ClientMq {
                 @Override
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                     if (correlationId.equals(properties.getCorrelationId())){
-                        log.info("客户端回调队列，correlationID：{}，对应上的消息：{}",properties.getCorrelationId(),new String(body));
+                        log.info("客户端回调队列，correlationID：{}，回调队列{}，对应上的消息：{}",properties.getCorrelationId(),properties.getReplyTo(),new String(body));
                     } else {
-                        log.info("客户端回调队列，correlationId：{}，未对应上的消息：{}",properties.getCorrelationId(),new String(body));
+                        log.info("客户端回调队列，correlationId：{}，回调队列：{}，未对应上的消息：{}",properties.getCorrelationId(),properties.getReplyTo(),new String(body));
                     }
                 }
             };
