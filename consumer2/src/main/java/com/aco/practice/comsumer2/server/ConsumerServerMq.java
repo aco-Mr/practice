@@ -14,6 +14,14 @@ import java.io.IOException;
 public class ConsumerServerMq {
     private static final String RPC_QUEUE_NAME = "aco_rpc_queue";
 
+    public static void main(String[] args) {
+        try {
+            consumerRpcMq();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void consumerRpcMq() throws Exception {
         try {
             // 获取连接
@@ -29,7 +37,7 @@ public class ConsumerServerMq {
                 @Override
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                     // 消费消息
-                    log.info("消费者2 --> RPC模式消费消息，交换机编码：{}，消息内容：{}",envelope.getDeliveryTag(),new String(body));
+                    log.info("消费者1 --> RPC模式消费消息，交换机编码：{}，消息内容：{}",envelope.getDeliveryTag(),new String(body));
                     // 手动答应
                     channel.basicAck(envelope.getDeliveryTag(),false);
                     // 获取回调队列

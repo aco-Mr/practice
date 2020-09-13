@@ -61,4 +61,10 @@ public class MqController {
     public void sendExchangeTopicMessage(Object object,String topickey){
         sendRabbitMqService.sendExchangeTopicMessage(object,topickey);
     }
+
+    @ApiOperation(value = "RPC模式发送消息")
+    @GetMapping("/mq/sendRpcMessage")
+    public void sendRpcMessages(Object object){
+        sendRabbitMqService.sendRpcMessage(object);
+    }
 }

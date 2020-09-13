@@ -36,4 +36,10 @@ public interface SendRabbitMqService {
      * @param topicKey
      */
     void sendExchangeTopicMessage(Object object,String topicKey);
+
+    /**
+     * RPC模式
+     * @param object
+     */
+    void sendRpcMessage(Object object);
 }

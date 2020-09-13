@@ -1,5 +1,6 @@
 package com.aco.practice.demo1.service.impl;
 
+import com.aco.practice.demo1.mq.rabbit.ClientMq;
 import com.aco.practice.demo1.mq.rabbit.SendDemoMq;
 import com.aco.practice.demo1.service.SendRabbitMqService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,18 @@ public class SendRabbitMqServiceImpl implements SendRabbitMqService {
             for (int i = 0; i < 20; i++) {
                 log.info("发送消息 --- {}",String.valueOf(object) + i);
                 SendDemoMq.sendTopicMq(object,topicKey);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendRpcMessage(Object object) {
+        try {
+            for (int i = 0; i < 20; i++) {
+                log.info("RPC发送消息 --- {}",String.valueOf(object) + i);
+                ClientMq.sendRpcMq(object);
             }
         } catch (Exception e) {
             e.printStackTrace();

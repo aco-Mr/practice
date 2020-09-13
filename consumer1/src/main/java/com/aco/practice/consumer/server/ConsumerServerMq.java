@@ -14,6 +14,14 @@ import java.io.IOException;
 public class ConsumerServerMq {
     private static final String RPC_QUEUE_NAME = "aco_rpc_queue";
 
+    public static void main(String[] args) {
+        try {
+            consumerRpcMq();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void consumerRpcMq() throws Exception {
         try {
             // 获取连接
