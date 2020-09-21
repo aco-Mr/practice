@@ -1,6 +1,7 @@
 package com.aco.practice.demo1.controller;
 
 import com.aco.practice.basic.util.ApiResponseResult;
+import com.aco.practice.demo1.mq.rabbit.SendSbMqMessage;
 import com.aco.practice.demo1.service.SendRabbitMqService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,9 @@ public class MqController {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private SendSbMqMessage sendSbMqMessage;
 
     @ApiOperation(value = "测试RabbitMq")
     @GetMapping(value = "/test/rabbitmq")
@@ -66,5 +70,13 @@ public class MqController {
     @GetMapping("/mq/sendRpcMessage")
     public void sendRpcMessages(Object object){
         sendRabbitMqService.sendRpcMessage(object);
+    }
+
+    @ApiOperation(value = "集成springboot发送消息")
+    @GetMapping("/mq/sendSbMessages")
+    public void sendSbMessages(String messages){
+        for (int i = 0; i < 20; i++) {
+            sendSbMqMessage.sendStringMessages(messages + i);
+        }
     }
 }
