@@ -4,7 +4,9 @@ import com.aco.practice.basic.util.ApiHttpCode;
 import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.request.dto.UserDto;
+import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.service.UserService;
+import com.aco.practice.demo1.util.RedissonLockUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,19 @@ public class UserController {
     @ApiOperation(value = "用户登录接口",notes = "用户登录接口", httpMethod = "POST")
     @PostMapping(value = "/login/form")
     public ResponseEntity login(UserDto userDto){
-        String token = userService.login(userDto);
+        String key = userDto.getName();
+//        boolean lock = RedissonLockUtil.tryLock(key);
+        String token;
+//        if (lock){
+//            try {
+//                token = userService.login(userDto);
+//            } finally {
+//                RedissonLockUtil.unlock(key);
+//            }
+//        } else {
+//            throw new CustomException("当前用户已登录");
+//        }
+        token = userService.login(userDto);
         if (token == null){
             return ResponseEntity.ok().body(ApiResponseResult.error(ApiHttpCode.ERROR.getCode(),"账号用户或密码错误"));
         }
