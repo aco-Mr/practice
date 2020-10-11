@@ -1,15 +1,18 @@
 package com.aco.practice.basic.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
 
 /**
  * @Author: HaoJianXu
  * @Date: 2020/5/31 15:52
  */
 @Api(value = "全局返回对象")
-public class ApiResponseResult<T> {
-    private static final Object RESULT_OBJECT=new Object();
+public class ApiResponseResult<T> implements Serializable {
+    private static final Object RESULT_OBJECT = new Object();
 
     @ApiModelProperty(value = "编码", name = "code", dataType = "int", example = "200")
     private Integer code;
@@ -52,7 +55,7 @@ public class ApiResponseResult<T> {
     }
 
     public static ApiResponseResult<Object> error() {
-        return ApiResponseResult.error(ApiHttpCode.ERROR, new Object());
+        return ApiResponseResult.error(ApiHttpCode.ERROR, RESULT_OBJECT);
     }
 
     public static <T> ApiResponseResult<T> error(T data) {
