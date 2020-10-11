@@ -9,6 +9,7 @@ import com.aco.practice.demo1.service.UserService;
 import com.aco.practice.demo1.util.RedissonLockUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: 2020/7/11 20:21
  */
 @RestController
+@Slf4j
 @Api(tags = "用户控制器")
 public class UserController {
 
@@ -44,18 +46,19 @@ public class UserController {
     @PostMapping(value = "/login/form")
     public ResponseEntity login(UserDto userDto){
         String key = userDto.getName();
-//        boolean lock = RedissonLockUtil.tryLock(key);
+        boolean lock = RedissonLockUtil.tryLock(key);
         String token;
-//        if (lock){
-//            try {
-//                token = userService.login(userDto);
-//            } finally {
-//                RedissonLockUtil.unlock(key);
-//            }
-//        } else {
-//            throw new CustomException("当前用户已登录");
-//        }
-        token = userService.login(userDto);
+        if (lock){
+            try {
+                log.info("----------------登录接口已上锁----------------");
+                token = userService.login(userDto);
+            } finally {
+                log.info("----------------登录接口已解锁----------------");
+                RedissonLockUtil.unlock(key);
+            }
+        } else {
+            throw new CustomException("当前用户已登录");
+        }
         if (token == null){
             return ResponseEntity.ok().body(ApiResponseResult.error(ApiHttpCode.ERROR.getCode(),"账号用户或密码错误"));
         }

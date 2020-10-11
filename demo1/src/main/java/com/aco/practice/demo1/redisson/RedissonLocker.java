@@ -2,7 +2,6 @@ package com.aco.practice.demo1.redisson;
 
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +15,6 @@ public class RedissonLocker implements Locker {
 
     private RedissonClient redissonClient;
 
-    @Autowired
     public RedissonLocker(RedissonClient redissonClient) {
         super();
         this.redissonClient = redissonClient;

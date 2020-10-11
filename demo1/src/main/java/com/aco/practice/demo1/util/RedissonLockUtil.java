@@ -2,6 +2,7 @@ package com.aco.practice.demo1.util;
 
 import com.aco.practice.demo1.redisson.Locker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,11 +10,12 @@ import java.util.concurrent.TimeUnit;
  * @Author: HaoJianXu
  * @Date: 2020/10/5 14:58
  */
+@Component
 public class RedissonLockUtil {
 
     private static Locker locker;
 
-    public static void setLocker(Locker locker){
+    public RedissonLockUtil(Locker locker){
         RedissonLockUtil.locker = locker;
     }
 
