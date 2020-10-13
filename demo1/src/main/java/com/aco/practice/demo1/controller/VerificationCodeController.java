@@ -4,7 +4,9 @@ import com.aco.practice.basic.util.ApiHttpCode;
 import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.constant.VerificationCodeConst;
 import com.aco.practice.demo1.domain.entity.UserEntity;
+import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.demo1.handle.UserContextHolder;
+import com.aco.practice.demo1.util.VerificationCodeUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
@@ -43,7 +45,8 @@ public class VerificationCodeController {
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         try {
             //生产验证码字符串并保存到session中去
-            String createText = defaultKaptcha.createText();
+//            String createText = defaultKaptcha.createText();
+            String createText = VerificationCodeUtil.getCaptcha();
             UserContextHolder<UserEntity> instance = UserContextHolder.getInstance();
             UserEntity user = instance.getUseParam("user");
             //给定一个唯一标识，防止验证码重复使用
@@ -71,7 +74,7 @@ public class VerificationCodeController {
 
     @PostMapping(value = "/code/check")
     @ApiOperation(value = "校验验证码")
-    public ApiResponseResult checkVerificationCode(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestBody JSONObject data){
+    public ResponseEntity checkVerificationCode(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,@RequestBody JSONObject data){
         //获取用户信息
         UserContextHolder<UserEntity> instance = UserContextHolder.getInstance();
         UserEntity user = instance.getUseParam("user");
@@ -81,9 +84,9 @@ public class VerificationCodeController {
         String code = data.getString("code");
         log.info("Session  verify  code：{}，from code：{}",kaptchaId,code);
         if (StringUtils.equals(kaptchaId,code)){
-            return ApiResponseResult.ok();
+            return ResponseEntity.ok().body("验证成功");
         } else {
-            return ApiResponseResult.error("验证码错误，请重新输入");
+            throw new CustomException("验证码错误，请重新输入");
         }
     }
 }
