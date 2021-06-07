@@ -4,6 +4,7 @@ import com.aco.practice.basic.util.ApiHttpCode;
 import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.demo1.exception.CustomException;
 import com.aco.practice.basic.response.ErrorInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Author: HaoJianXu
  * @Date: 2020/6/5 21:49
  */
+@Slf4j
 @RestControllerAdvice
 public class RestExceptionHandle {
 
@@ -39,9 +41,10 @@ public class RestExceptionHandle {
      */
     @ExceptionHandler({Exception.class})
     public ApiResponseResult<ErrorInfo> exceptionHandle(HttpServletRequest request, Exception exception){
+        log.error(exception.getMessage());
         ErrorInfo body = new ErrorInfo();
         body.setCode(ApiHttpCode.ERROR.getCode());
-        body.setMsg(exception.getMessage());
+        body.setMsg(ApiHttpCode.ERROR.getMsg());
         return new ApiResponseResult<ErrorInfo>(ApiHttpCode.ERROR,body);
     }
 }
