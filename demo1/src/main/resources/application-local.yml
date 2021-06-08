@@ -1,25 +1,40 @@
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.103.193.66:3306/t_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
-    username: root
-    password: 123456
-    hikari:
-      minimum-idle: 5 # 最小空闲连接数量
-      idle-timeout: 180000 # 空闲连接存活最大时间，默认600000（10分钟）
-      maximum-pool-size: 10 # 连接池最大连接数，默认是10
-      auto-commit: true # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
-      pool-name: AcoHikariCP # 连接池名称
-      max-lifetime: 1800000 # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-      connection-timeout: 30000 # 数据库连接超时时间,默认30秒，即30000
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.8.107:3306/t_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
+          username: root
+          password: 123456
+        slave:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.8.107:3306/t_test2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
+          username: root
+          password: 123456
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.8.107:3306/t_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
+#    username: root
+#    password: 123456
+#    hikari:
+#      minimum-idle: 5 # 最小空闲连接数量
+#      idle-timeout: 180000 # 空闲连接存活最大时间，默认600000（10分钟）
+#      maximum-pool-size: 10 # 连接池最大连接数，默认是10
+#      auto-commit: true # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+#      pool-name: AcoHikariCP # 连接池名称
+#      max-lifetime: 1800000 # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+#      connection-timeout: 30000 # 数据库连接超时时间,默认30秒，即30000
   redis:
     mode: single
     database: 0
 #    host: 47.103.193.66
-    host: 47.112.240.25
+    host: 192.168.8.107
     port: 6379
-#    password: aco123456
+    password: 123456
     timeout: 10000 # 连接超时时间（毫秒）
     jedis:
       pool:
@@ -29,12 +44,12 @@ spring:
         min-idle: 10 # 连接池中的最小空闲连接
   #配置rabbitmq
   rabbitmq:
-    host: 47.103.193.66 #安装rabbitmq地址
+    host: 192.168.8.107 #安装rabbitmq地址
     port: 5672 #端口号
 #    username: aco #用户名
 #    password: acorabbit #密码
     username: admin #用户名
-    password: 123456 #密码
+    password: admin #密码
     virtual-host: aco_virtual
     connection-timeout: 20000 #超时时间
     publisher-returns: true #是否启用【发布返回】
@@ -45,3 +60,16 @@ mybatis-plus:
 
 logging:
   config: classpath:log4j2.xml
+
+
+hikari:
+  master:
+    jdbc-url: jdbc:mysql://192.168.8.107:3306/t_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
+    username: root
+    password: 123456
+    maximum-pool-size: 10
+  slave:
+    jdbc-url: jdbc:mysql://192.168.8.107:3306/t_test2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&userSSL=false
+    username: root
+    password: 123456
+    maximum-pool-size: 10

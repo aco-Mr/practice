@@ -1,20 +1,15 @@
 package com.aco.practice.demo1.service.impl;
 
-import com.aco.practice.demo1.domain.emnu.StateEnum;
 import com.aco.practice.demo1.domain.entity.ScheduledConfigEntity;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.exception.CustomException;
-import com.aco.practice.demo1.handle.UserContextHolder;
+import com.aco.practice.demo1.holder.UserContextHolder;
 import com.aco.practice.demo1.mapper.ScheduledConfigMapper;
 import com.aco.practice.demo1.service.ScheduledConfigService;
 import com.aco.practice.demo1.task.ScheduledTask;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;

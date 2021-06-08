@@ -6,10 +6,15 @@ import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
 import com.aco.practice.basic.util.ApiResponseResult;
 import com.aco.practice.basic.util.ExcelStyleUtil;
 import com.aco.practice.basic.util.RedisKeyUtil;
+import com.aco.practice.demo1.domain.annotations.DataSource;
+import com.aco.practice.demo1.domain.entity.DatasourceEntity;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.domain.response.vo.EasypoiVo;
 import com.aco.practice.demo1.domain.response.vo.ExportTestVo;
-import com.aco.practice.demo1.handle.UserContextHolder;
+import com.aco.practice.demo1.holder.UserContextHolder;
+import com.aco.practice.demo1.mapper.DatasourceMapper;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +23,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +47,9 @@ public class DemoController {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private DatasourceMapper datasourceMapper;
 
     @ApiOperation(value = "demo 测试接口", notes = "demo 测试接口")
     @GetMapping(value = "demo")
@@ -152,5 +161,26 @@ public class DemoController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @ApiOperation(value = "插入数据库名称")
+    @PostMapping("insertData")
+    public ApiResponseResult insertDataSource(String name){
+        DatasourceEntity datasourceEntity = new DatasourceEntity();
+        datasourceEntity.setName(name);
+        return ApiResponseResult.ok(datasourceMapper.insert(datasourceEntity));
+    }
+
+    @ApiOperation(value = "查询主库信息")
+    @GetMapping("queryMaster")
+    public ApiResponseResult queryMaster(){
+        return ApiResponseResult.ok(datasourceMapper.selectList(new QueryWrapper<>()));
+    }
+
+    @ApiOperation(value = "查询从库信息")
+    @DataSource(name = "slave")
+    @GetMapping("querySlave")
+    public ApiResponseResult querySlave(){
+        return ApiResponseResult.ok(datasourceMapper.selectList(new QueryWrapper<>()));
     }
 }

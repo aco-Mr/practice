@@ -30,7 +30,7 @@ public class SchedulerSys implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ThreadPoolExecutor.customThreadPool().execute(this::runnerScheduled);
+//        ThreadPoolExecutor.customThreadPool().execute(this::runnerScheduled);
     }
 
     private void runnerScheduled(){

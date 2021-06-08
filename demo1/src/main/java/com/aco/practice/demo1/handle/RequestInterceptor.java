@@ -3,6 +3,7 @@ package com.aco.practice.demo1.handle;
 import com.aco.practice.basic.util.RedisKeyUtil;
 import com.aco.practice.demo1.domain.entity.UserEntity;
 import com.aco.practice.demo1.exception.CustomException;
+import com.aco.practice.demo1.holder.UserContextHolder;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
